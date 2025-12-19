@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golazo! Liverpool 25/26</title>
+    <style>
+        /* --- 1. Reset & Bas --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: #050505;
+            color: #e5e5e5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* --- 2. Hero / Dashboard --- */
+        header {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            position: relative;
+        }
+
+        .brand-logo {
+            width: 200px;
+            height: auto;
+            margin-bottom: 60px;
+            opacity: 0;
+            animation: fadeDown 1s ease forwards 0.2s;
+        }
+
+        .hero-dashboard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 0.5s;
+        }
+
+        .dash-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: #666;
+            margin-bottom: 10px;
+            transition: opacity 0.5s ease;
+        }
+
+        .dash-value {
+            font-size: 6rem;
+            font-weight: 800;
+            line-height: 1;
+            color: #fff;
+            letter-spacing: -0.03em;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .dash-sub {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #C8102E;
+            margin-top: 10px;
+            letter-spacing: 0.05em;
+            height: 30px;
+            transition: opacity 0.5s ease;
+        }
+
+        .fade-out { opacity: 0; transform: translateY(10px); }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            font-size: 1.5rem;
+            color: #333;
+            animation: bounce 2s infinite;
+        }
+
+        /* --- 3. Tidslinje Layout --- */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px;
+            position: relative;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, #333 10%, #333 90%, transparent);
+            z-index: 0;
+        }
+
+        .match-section {
+            margin-bottom: 120px;
+            padding-left: 60px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .match-section.visible { opacity: 1; transform: translateY(0); }
+
+        .match-section::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 25px;
+            width: 9px;
+            height: 9px;
+            background-color: #C8102E;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(200, 16, 46, 0.5);
+            z-index: 1;
+        }
+
+        /* --- 4. Match Header (UPDATED) --- */
+        .match-header {
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .match-meta {
+            display: flex;
+            flex-wrap: wrap; /* För mobilen */
+            align-items: center;
+            gap: 10px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .competition-tag {
+            padding: 4px 8px;
+            border-radius: 2px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            background: #1a1a1a;
+        }
+        .comp-pl { color: #fff; border: 1px solid #333; } 
+        .comp-ucl { color: #89CFF0; border: 1px solid rgba(137, 207, 240, 0.3); } 
+        .comp-cup { color: #ff6b6b; border: 1px solid rgba(255, 107, 107, 0.3); } 
+
+        .meta-divider { color: #444; margin: 0 5px; }
+        .match-details-text { color: #aaa; font-weight: 500; letter-spacing: 0.05em; }
+
+        .match-info h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: #fff;
+            margin: 0;
+            line-height: 1;
+        }
+
+        /* --- 5. Grid & Kort --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .card:hover { transform: translateY(-5px); }
+
+        .image-wrapper {
+            position: relative;
+            overflow: hidden;
+            background-color: #111;
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            opacity: 0.85;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            filter: grayscale(20%);
+        }
+        .card:hover img { opacity: 1; filter: grayscale(0%); transform: scale(1.03); }
+
+        .meta-preview {
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: #ccc;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+            border-left: 2px solid #333;
+            padding-left: 10px;
+            transition: border-color 0.3s;
+        }
+        .card:hover .meta-preview { border-left-color: #fff; color: #fff; }
+
+        /* --- 6. MODALS --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+
+        .modal-content {
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            width: 100%;
+            max-height: 90vh;
+            gap: 50px;
+            overflow-y: auto;
+        }
+        @media (min-width: 900px) {
+            .modal-content { flex-direction: row; align-items: center; overflow-y: visible; }
+        }
+        
+        .modal-image-container { flex: 1.5; display: flex; justify-content: center; align-items: center; }
+        .modal-image-container img { max-width: 100%; max-height: 80vh; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
+        .modal-text { flex: 0.5; color: #fff; display: flex; flex-direction: column; justify-content: center; }
+        .modal-header { font-size: 3rem; font-weight: 800; margin-bottom: 10px; line-height: 1; letter-spacing: -0.03em; }
+        .modal-subheader { font-size: 1.2rem; color: #666; margin-bottom: 60px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.1em; }
+        .stat-section { margin-bottom: 40px; }
+        .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: #444; margin-bottom: 12px; display: block; }
+        .assist-value { font-size: 1.5rem; font-weight: 500; color: #fff; }
+        .involved-list { list-style: none; padding: 0; margin: 0; }
+        .involved-list li { font-size: 1rem; color: #888; margin-bottom: 8px; transition: color 0.2s; }
+        .involved-list li:hover { color: #fff; }
+        
+        /* Player Modal */
+        #player-modal { z-index: 1100; }
+        .player-stats-row {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%;
+            border-top: 1px solid #222; border-bottom: 1px solid #222; padding: 30px 0; margin-bottom: 40px;
+        }
+        .p-stat { display: flex; flex-direction: column; align-items: flex-start; }
+        .p-stat-val { font-size: 3.5rem; font-weight: 800; color: #fff; line-height: 1; }
+        .p-stat-lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: #555; margin-top: 10px; }
+        .player-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+        .player-gallery .card { opacity: 0.6; transition: opacity 0.3s; }
+        .player-gallery .card:hover { opacity: 1; }
+
+        .clickable-player { cursor: pointer; border-bottom: 1px solid #333; transition: all 0.2s; }
+        .clickable-player:hover { border-bottom: 1px solid #fff; color: #fff; }
+        .close-btn { position: absolute; top: 30px; right: 40px; font-size: 2rem; color: #fff; cursor: pointer; opacity: 0.5; z-index: 1001; transition: opacity 0.2s; }
+        .close-btn:hover { opacity: 1; }
+
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+
+        @media (max-width: 768px) {
+            .timeline-line { left: 20px; }
+            .match-section { padding-left: 40px; }
+            .match-section::before { left: 16px; top: 22px; }
+            .match-info h2 { font-size: 2rem; }
+            header { padding: 80px 20px; min-height: 70vh; }
+            .dash-value { font-size: 4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="logo.png" alt="Golazo Liverpool" class="brand-logo">
+        <div class="hero-dashboard">
+            <div id="dash-label" class="dash-label">Laddar...</div>
+            <div id="dash-value" class="dash-value">-</div>
+            <div id="dash-sub" class="dash-sub"></div>
+        </div>
+        <div class="scroll-indicator">&darr;</div>
+    </header>
+
+    <main id="main-container" class="main-container">
+        <div class="timeline-line"></div>
+    </main>
+
+    <div id="modal-overlay" class="modal-overlay" onclick="closeModal(event)">
+        <div class="close-btn" onclick="closeModalDirect()">&times;</div>
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-image-container">
+                <img id="m-img" src="" alt="">
+            </div>
+            <div class="modal-text">
+                <div id="m-scorer" class="modal-header"></div>
+                <div id="m-match" class="modal-subheader"></div>
+                <div class="stat-section">
+                    <span class="label">Assist</span>
+                    <div id="m-assist" class="assist-value"></div>
+                </div>
+                <div class="stat-section">
+                    <span class="label">Involved players</span>
+                    <ul id="m-involved" class="involved-list"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="player-modal" class="modal-overlay" onclick="closePlayerModal(event)">
+        <div class="close-btn" onclick="closePlayerModalDirect()">&times;</div>
+        <div class="modal-content" style="max-width: 900px;" onclick="event.stopPropagation()">
+            <div class="modal-text" style="flex: 1; width: 100%;">
+                <div id="p-name" class="modal-header" style="margin-bottom: 10px;"></div>
+                <div class="modal-subheader" style="margin-bottom: 40px;">Season Stats</div>
+                <div class="player-stats-row">
+                    <div class="p-stat">
+                        <span id="p-goals" class="p-stat-val">0</span>
+                        <span class="p-stat-lbl">Goals</span>
+                    </div>
+                    <div class="p-stat">
+                        <span id="p-assists" class="p-stat-val">0</span>
+                        <span class="p-stat-lbl">Assists</span>
+                    </div>
+                    <div class="p-stat">
+                        <span id="p-involved" class="p-stat-val">0</span>
+                        <span class="p-stat-lbl">Involvements</span>
+                    </div>
+                </div>
+                <div class="label" style="align-self: flex-start; margin-bottom: 20px;">Contributions Gallery</div>
+                <div id="p-gallery" class="player-gallery"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA SÄSONGEN 25/26 ---
+        const seasonData = [
+            // GW 1
+            { 
+                opponent: "Bournemouth", 
+                competition: "Premier League", 
+                compClass: "comp-pl", 
+                round: "Gameweek 1", 
+                details: "Fri 15 August — 21:00 — Anfield",
+                goals: [
+                    { img: "1-ekitike-bou.png", scorer: "Hugo Ekitiké", assist: "Alexis Mac Allister", involved: ["Virgil van Dijk", "Hugo Ekitiké", "Alexis Mac Allister"] },
+                    { img: "2-gakpo-bou.png", scorer: "Cody Gakpo", assist: "Hugo Ekitiké", involved: ["Alexis Mac Allister", "Milos Kerkez", "Hugo Ekitiké", "Cody Gakpo"] },
+                    { img: "3-chiesa-bou.png", scorer: "Federico Chiesa", assist: "-", involved: ["Alisson Becker", "Dominik Szoboszlai", "Mohamed Salah", "Curtis Jones", "Federico Chiesa"] },
+                    { img: "4-salah-bou.png", scorer: "Mohamed Salah", assist: "Wataru Endo", involved: ["Virgil van Dijk", "Wataru Endo", "Mohamed Salah"] }
+                ]
+            },
+            // GW 2
+            { 
+                opponent: "Newcastle United", 
+                competition: "Premier League", 
+                compClass: "comp-pl", 
+                round: "Gameweek 2", 
+                details: "Mon 25 August — 21:00 — St. James' Park",
+                goals: [
+                    { img: "5-gravenberch-new.png", scorer: "Ryan Gravenberch", assist: "Cody Gakpo", involved: ["Ryan Gravenberch", "Curtis Jones", "Cody Gakpo"] },
+                    { img: "6-ekitike-new.png", scorer: "Hugo Ekitiké", assist: "Cody Gakpo", involved: ["Ibrahima Konaté", "Mohamed Salah", "Florian Wirtz", "Hugo Ekitiké", "Cody Gakpo"] },
+                    { img: "7-ngumoha-new.png", scorer: "Rio Ngumoha", assist: "Mohamed Salah", involved: ["Ibrahima Konaté", "Harvey Elliott", "Ryan Gravenberch", "Conor Bradley", "Federico Chiesa", "Mohamed Salah", "Rio Ngumoha"] }
+                ]
+            },
+            // GW 3
+            { 
+                opponent: "Arsenal", 
+                competition: "Premier League", 
+                compClass: "comp-pl", 
+                round: "Gameweek 3", 
+                details: "Sun 31 August — 17:30 — Anfield",
+                goals: [
+                    { img: "8-szoboszlai-ars.png", scorer: "Dominik Szoboszlai", assist: "-", involved: ["Dominik Szoboszlai"] }
+                ]
+            },
+            // GW 4
+            { 
+                opponent: "Burnley", 
+                competition: "Premier League", 
+                compClass: "comp-pl", 
+                round: "Gameweek 4", 
+                details: "Sun 14 September — 15:00 — Turf Moor",
+                goals: [
+                    { img: "9-salah-bur.png", scorer: "Mohamed Salah", assist: "-", involved: ["Mohamed Salah"] }
+                ]
+            },
+            // UCL 1
+            { 
+                opponent: "Atletico Madrid", 
+                competition: "Champions League", 
+                compClass: "comp-ucl", 
+                round: "Matchday 1", 
+                details: "Wed 17 September — 21:00 — Anfield",
+                goals: [
+                    { img: "10-robertson-atm.png", scorer: "Andy Robertson", assist: "Mohamed Salah", involved: ["Mohamed Salah", "Andy Robertson"] },
+                    { img: "11-salah-atm.png", scorer: "Mohamed Salah", assist: "Ryan Gravenberch", involved: ["Ibrahima Konaté", "Mohamed Salah", "Ryan Gravenberch"] },
+                    { img: "12-van-dijk-atm.png", scorer: "Virgil van Dijk", assist: "Dominik Szoboszlai", involved: ["Dominik Szoboszlai", "Virgil van Dijk"] }
+                ]
+            },
+            // GW 5
+            { 
+                opponent: "Everton", 
+                competition: "Premier League", 
+                compClass: "comp-pl", 
+                round: "Gameweek 5", 
+                details: "Sat 20 September — 13:30 — Anfield",
+                goals: [
+                    { img: "13-gravenberch-eve.png", scorer: "Ryan Gravenberch", assist: "Mohamed Salah", involved: ["Ryan Gravenberch", "Dominik Szoboszlai", "Mohamed Salah"] },
+                    { img: "14-ekitike-eve.png", scorer: "Hugo Ekitiké", assist: "Ryan Gravenberch", involved: ["Alexis Mac Allister", "Dominik Szoboszlai", "Ryan Gravenberch", "Hugo Ekitiké"] }
+                ]
+            },
+            // CUP
+            { 
+                opponent: "Southampton", 
+                competition: "League Cup", 
+                compClass: "comp-cup", 
+                round: "Round 3", 
+                details: "Tue 23 September — 21:00 — Anfield",
+                goals: [
+                    { img: "15-isak-sou.png", scorer: "Alexander Isak", assist: "Federico Chiesa", involved: ["Federico Chiesa", "Alexander Isak"] },
+                    { img: "16-ekitike-sou.png", scorer: "Hugo Ekitiké", assist: "Federico Chiesa", involved: ["Jeremie Frimpong", "Conor Bradley", "Joe Gomez", "Andy Robertson", "Federico Chiesa", "Hugo Ekitiké"] }
+                ]
+            },
+            // GW 6
+            { 
+                opponent: "Crystal Palace", 
+                competition: "Premier League", 
+                compClass: "comp-pl", 
+                round: "Gameweek 6", 
+                details: "Sat 27 September — 16:00 — Selhurst Park",
+                goals: [
+                    { img: "17-chiesa-cry.png", scorer: "Federico Chiesa", assist: "Mohamed Salah", involved: ["Cody Gakpo", "Rio Ngumoha", "Ryan Gravenberch", "Jeremie Frimpong", "Mohamed Salah", "Federico Chiesa"] }
+                ]
+            },
+            // GW 7
+            { 
+                opponent: "Chelsea", 
+                competition: "Premier League", 
+                compClass: "comp-pl", 
+                round: "Gameweek 7", 
+                details: "Sat 4 October — 18:30 — Stamford Bridge",
+                goals: [
+                    { img: "18-gakpo-che.png", scorer: "Cody Gakpo", assist: "Alexander Isak", involved: ["Alexander Isak", "Dominik Szoboszlai", "Mohamed Salah", "Cody Gakpo"] }
+                ]
+            },
+            // GW 8
+            { 
+                opponent: "Manchester United", 
+                competition: "Premier League", 
+                compClass: "comp-pl", 
+                round: "Gameweek 8", 
+                details: "Sun 19 October — 17:30 — Anfield",
+                goals: [
+                    { img: "19-gakpo-mun.png", scorer: "Cody Gakpo", assist: "Federico Chiesa", involved: ["Hugo Ekitiké", "Florian Wirtz", "Federico Chiesa", "Cody Gakpo"] }
+                ]
+            },
+            // UCL 3
+            { 
+                opponent: "Eintracht Frankfurt", 
+                competition: "Champions League", 
+                compClass: "comp-ucl", 
+                round: "Matchday 3", 
+                details: "Wed 22 October — 21:00 — Deutsche Bank Park",
+                goals: [
+                    { img: "20-ekitike-fra.png", scorer: "Hugo Ekitiké", assist: "Andy Robertson", involved: ["Andy Robertson", "Hugo Ekitiké"] },
+                    { img: "21-van-dijk-fra.png", scorer: "Virgil van Dijk", assist: "Cody Gakpo", involved: ["Cody Gakpo", "Virgil van Dijk"] },
+                    { img: "22-konate-fra.png", scorer: "Ibrahima Konaté", assist: "Dominik Szoboszlai", involved: ["Dominik Szoboszlai", "Ibrahima Konaté"] },
+                    { img: "23-gakpo-fra.png", scorer: "Cody Gakpo", assist: "Florian Wirtz", involved: ["Dominik Szoboszlai", "Florian Wirtz", "Cody Gakpo"] },
+                    { img: "24-szoboszlai-fra.png", scorer: "Dominik Szoboszlai", assist: "Florian Wirtz", involved: ["Cody Gakpo", "Florian Wirtz", "Dominik Szoboszlai"] }
+                ]
+            },
+            // GW 9
+            { 
+                opponent: "Brentford", 
+                competition: "Premier League", 
+                compClass: "comp-pl", 
+                round: "Gameweek 9", 
+                details: "Sat 25 October — 21:00 — Gtech Community Stadium",
+                goals: [
+                    { img: "25-kerkez-bre.png", scorer: "Milos Kerkez", assist: "Conor Bradley", involved: ["Ibrahima Konaté", "Mohamed Salah", "Florian Wirtz", "Conor Bradley", "Milos Kerkez"] },
+                    { img: "26-salah-bre.png", scorer: "Mohamed Salah", assist: "Dominik Szoboszlai", involved: ["Dominik Szoboszlai", "Mohamed Salah"] }
+                ]
+            },
+            // GW 10
+            { 
+                opponent: "Aston Villa", 
+                competition: "Premier League", 
+                compClass: "comp-pl", 
+                round: "Gameweek 10", 
+                details: "Sat 1 November — 21:00 — Anfield",
+                goals: [
+                    { img: "27-salah-avl.png", scorer: "Mohamed Salah", assist: "-", involved: ["Mohamed Salah"] },
+                    { img: "28-gravenberch-avl.png", scorer: "Ryan Gravenberch", assist: "Alexis Mac Allister", involved: ["Virgil van Dijk", "Cody Gakpo", "Alexis Mac Allister", "Ryan Gravenberch"] }
+                ]
+            },
+            // UCL 4
+            { 
+                opponent: "Real Madrid", 
+                competition: "Champions League", 
+                compClass: "comp-ucl", 
+                round: "Matchday 4", 
+                details: "Tue 4 November — 21:00 — Anfield",
+                goals: [
+                    { img: "29-mac-allister-rma.png", scorer: "Alexis Mac Allister", assist: "Dominik Szoboszlai", involved: ["Dominik Szoboszlai", "Alexis Mac Allister"] }
+                ]
+            },
+            // UCL 5
+            { 
+                opponent: "PSV Eindhoven", 
+                competition: "Champions League", 
+                compClass: "comp-ucl", 
+                round: "Matchday 5", 
+                details: "Wed 26 November — 21:00 — Anfield",
+                goals: [
+                    { img: "30-szoboszlai-psv.png", scorer: "Dominik Szoboszlai", assist: "-", involved: ["Ryan Gravenberch", "Alexis Mac Allister", "Cody Gakpo", "Dominik Szoboszlai"] }
+                ]
+            },
+            // GW 13
+            { 
+                opponent: "West Ham United", 
+                competition: "Premier League", 
+                compClass: "comp-pl", 
+                round: "Gameweek 13", 
+                details: "Sun 30 November — 15:05 — London Stadium",
+                goals: [
+                    { img: "31-isak-whu.png", scorer: "Alexander Isak", assist: "Cody Gakpo", involved: ["Florian Wirtz", "Joe Gomez", "Cody Gakpo", "Alexander Isak"] },
+                    { img: "32-gakpo-whu.png", scorer: "Cody Gakpo", assist: "Joe Gomez", involved: ["Alexis Mac Allister", "Andy Robertson", "Cody Gakpo", "Hugo Ekitiké", "Joe Gomez", "Dominik Szoboszlai"] }
+                ]
+            },
+            // GW 14
+            { 
+                opponent: "Sunderland", 
+                competition: "Premier League", 
+                compClass: "comp-pl", 
+                round: "Gameweek 14", 
+                details: "Wed 3 December — 21:15 — Anfield",
+                goals: [
+                    { img: "33-mukiele-sun.png", scorer: "Nordi Mukiele (OG)", assist: "-", involved: ["Curtis Jones", "Florian Wirtz"] }
+                ]
+            },
+            // GW 15
+            { 
+                opponent: "Leeds United", 
+                competition: "Premier League", 
+                compClass: "comp-pl", 
+                round: "Gameweek 15", 
+                details: "Sat 6 December — 18:30 — Elland Road",
+                goals: [
+                    { img: "34-ekitike-lee.png", scorer: "Hugo Ekitiké", assist: "-", involved: ["Hugo Ekitiké"] },
+                    { img: "35-ekitike-lee.png", scorer: "Hugo Ekitiké", assist: "Conor Bradley", involved: ["Conor Bradley", "Hugo Ekitiké"] },
+                    { img: "36-szoboszlai-lee.png", scorer: "Dominik Szoboszlai", assist: "Ryan Gravenberch", involved: ["Curtis Jones", "Ryan Gravenberch", "Dominik Szoboszlai"] }
+                ]
+            },
+            // UCL 6
+            { 
+                opponent: "Inter", 
+                competition: "Champions League", 
+                compClass: "comp-ucl", 
+                round: "Matchday 6", 
+                details: "Tue 9 December — 21:00 — San Siro",
+                goals: [
+                    { img: "37-szoboszlai-int.png", scorer: "Dominik Szoboszlai", assist: "-", involved: ["Dominik Szoboszlai"] }
+                ]
+            },
+            // GW 16
+            { 
+                opponent: "Brighton & Hove Albion", 
+                competition: "Premier League", 
+                compClass: "comp-pl", 
+                round: "Gameweek 16", 
+                details: "Sat 13 December — 16:00 — Anfield",
+                goals: [
+                    { img: "38-ekitike-bha.png", scorer: "Hugo Ekitiké", assist: "Conor Bradley", involved: ["Conor Bradley", "Hugo Ekitiké"] },
+                    { img: "39-ekitike-bha.png", scorer: "Hugo Ekitiké", assist: "Mohamed Salah", involved: ["Mohamed Salah"] }
+                ]
+            }
+        ];
+
+        // --- DASHBOARD ---
+        function initDashboard() {
+            const labelEl = document.getElementById('dash-label');
+            const valueEl = document.getElementById('dash-value');
+            const subEl = document.getElementById('dash-sub');
+
+            let totalGoals = 0;
+            const goalsMap = {}, assistsMap = {}, involvedMap = {};
+
+            seasonData.forEach(match => {
+                match.goals.forEach(goal => {
+                    totalGoals++;
+                    goalsMap[goal.scorer] = (goalsMap[goal.scorer] || 0) + 1;
+                    if (goal.assist && goal.assist !== "-") assistsMap[goal.assist] = (assistsMap[goal.assist] || 0) + 1;
+                    if (goal.involved) goal.involved.forEach(p => involvedMap[p] = (involvedMap[p] || 0) + 1);
+                });
+            });
+
+            const findTop = (map) => {
+                let topName = "", topCount = 0;
+                for (const [name, count] of Object.entries(map)) {
+                    if (count > topCount) { topCount = count; topName = name; }
+                }
+                return { name: topName, count: topCount };
+            };
+
+            const topScorer = findTop(goalsMap);
+            const topAssister = findTop(assistsMap);
+            const topInvolved = findTop(involvedMap);
+
+            const slides = [
+                { label: "Total Goals", value: totalGoals, sub: "" },
+                { label: "Top Scorer", value: topScorer.count, sub: topScorer.name },
+                { label: "Assist Leader", value: topAssister.count, sub: topAssister.name },
+                { label: "Most Involved", value: topInvolved.count, sub: topInvolved.name }
+            ];
+
+            let currentSlide = 0;
+            const updateDisplay = () => {
+                labelEl.classList.add('fade-out'); valueEl.classList.add('fade-out'); subEl.classList.add('fade-out');
+                setTimeout(() => {
+                    const slide = slides[currentSlide];
+                    labelEl.innerText = slide.label; valueEl.innerText = slide.value; subEl.innerText = slide.sub;
+                    labelEl.classList.remove('fade-out'); valueEl.classList.remove('fade-out'); subEl.classList.remove('fade-out');
+                    currentSlide = (currentSlide + 1) % slides.length;
+                }, 500);
+            };
+            updateDisplay();
+            setInterval(updateDisplay, 4000);
+        }
+
+        // --- MAIN RENDER ---
+        const container = document.getElementById('main-container');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const mImg = document.getElementById('m-img');
+        const mScorer = document.getElementById('m-scorer');
+        const mMatch = document.getElementById('m-match');
+        const mAssist = document.getElementById('m-assist');
+        const mInvolved = document.getElementById('m-involved');
+        const playerModal = document.getElementById('player-modal');
+        const pName = document.getElementById('p-name');
+        const pGoals = document.getElementById('p-goals');
+        const pAssists = document.getElementById('p-assists');
+        const pInvolved = document.getElementById('p-involved');
+        const pGallery = document.getElementById('p-gallery');
+
+        initDashboard();
+
+        seasonData.forEach((match, matchIndex) => {
+            const section = document.createElement('section');
+            section.className = 'match-section';
+
+            const headerHTML = `
+                <div class="match-header">
+                    <div class="match-meta">
+                        <span class="competition-tag ${match.compClass}">${match.competition}</span>
+                        <span class="meta-divider">/</span>
+                        <span>${match.round}</span>
+                        <span class="meta-divider">|</span>
+                        <span class="match-details-text">${match.details}</span>
+                    </div>
+                    <div class="match-info">
+                        <h2>${match.opponent}</h2>
+                    </div>
+                </div>
+            `;
+            section.innerHTML = headerHTML;
+
+            const gridDiv = document.createElement('div');
+            gridDiv.className = 'grid';
+
+            match.goals.forEach((goal, goalIndex) => {
+                const article = document.createElement('article');
+                article.className = 'card';
+                article.onclick = () => openModal(matchIndex, goalIndex);
+                article.innerHTML = `
+                    <div class="image-wrapper"><img src="images/${goal.img}" alt="Goal by ${goal.scorer}" loading="lazy"></div>
+                    <div class="meta-preview"><span>${goal.scorer}</span></div>
+                `;
+                gridDiv.appendChild(article);
+            });
+
+            section.appendChild(gridDiv);
+            container.appendChild(section);
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.match-section').forEach(s => observer.observe(s));
+
+        // --- FUNCTIONS ---
+        function openModal(mIndex, gIndex) {
+            const data = seasonData[mIndex].goals[gIndex];
+            const matchInfo = seasonData[mIndex];
+            mImg.src = `images/${data.img}`;
+            mMatch.innerText = `${matchInfo.opponent} | ${matchInfo.competition}`;
+            mScorer.innerHTML = `<span class="clickable-player" onclick="openPlayer('${data.scorer}')">${data.scorer}</span>`;
+            mAssist.innerHTML = (data.assist && data.assist !== "-") ? `<span class="clickable-player" onclick="openPlayer('${data.assist}')">${data.assist}</span>` : "-";
+            mInvolved.innerHTML = '';
+            if (data.involved) data.involved.forEach(p => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span class="clickable-player" onclick="openPlayer('${p}')">${p}</span>`;
+                mInvolved.appendChild(li);
+            });
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) { if (event.target === modalOverlay) closeModalDirect(); }
+        function closeModalDirect() { modalOverlay.classList.remove('active'); document.body.style.overflow = ''; }
+
+        function openPlayer(playerName) {
+            let stats = { goals: 0, assists: 0, sequence: 0 };
+            let relatedGoals = []; 
+            seasonData.forEach((match, mIdx) => {
+                match.goals.forEach((goal, gIdx) => {
+                    let involvedInThisGoal = false;
+                    if (goal.scorer === playerName) { stats.goals++; involvedInThisGoal = true; }
+                    if (goal.assist === playerName) { stats.assists++; involvedInThisGoal = true; }
+                    if (goal.involved && goal.involved.includes(playerName)) { stats.sequence++; involvedInThisGoal = true; }
+                    if (involvedInThisGoal) relatedGoals.push({ img: goal.img, scorer: goal.scorer, match: match.opponent, mIndex: mIdx, gIndex: gIdx });
+                });
+            });
+            pName.innerText = playerName; pGoals.innerText = stats.goals; pAssists.innerText = stats.assists; pInvolved.innerText = stats.sequence;
+            pGallery.innerHTML = '';
+            relatedGoals.forEach(item => {
+                const miniCard = document.createElement('div');
+                miniCard.className = 'card';
+                miniCard.onclick = () => { closePlayerModalDirect(); openModal(item.mIndex, item.gIndex); };
+                miniCard.innerHTML = `<div class="image-wrapper"><img src="images/${item.img}" alt="Goal"></div><div class="meta-preview" style="font-size: 0.7rem; margin-top: 8px; color: #777;"><span>vs ${item.match}</span></div>`;
+                pGallery.appendChild(miniCard);
+            });
+            playerModal.classList.add('active');
+        }
+
+        function closePlayerModal(event) { if (event.target === playerModal) closePlayerModalDirect(); }
+        function closePlayerModalDirect() { playerModal.classList.remove('active'); }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") {
+                if (playerModal.classList.contains('active')) closePlayerModalDirect();
+                else closeModalDirect();
+            }
+        });
+    </script>
+</body>
+</html>
