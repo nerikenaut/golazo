@@ -102,6 +102,33 @@
             z-index: 0;
         }
 
+        /* --- Månadsavdelare (Klickbar) --- */
+        .month-header {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #444; /* Lite tydligare för att visa att den finns */
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding-left: 60px;
+            margin-top: 80px;
+            margin-bottom: 40px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            z-index: 1;
+            cursor: pointer; /* Indikerar klickbarhet */
+            display: inline-block; /* För hover-effekt */
+            width: 100%;
+        }
+        
+        .month-header:hover {
+            color: #fff; /* Lyser upp vid hover */
+            transform: translateX(10px); /* Liten rörelse */
+        }
+        
+        .month-header.visible { opacity: 1; transform: translateY(0); }
+
         .match-section {
             margin-bottom: 120px;
             padding-left: 60px;
@@ -255,21 +282,32 @@
         .involved-list li { font-size: 1rem; color: #888; margin-bottom: 8px; transition: color 0.2s; }
         .involved-list li:hover { color: #fff; }
         
-        /* Player Modal */
-        #player-modal { z-index: 1100; }
-        .player-stats-row {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%;
-            border-top: 1px solid #222; border-bottom: 1px solid #222; padding: 30px 0; margin-bottom: 40px;
+        /* Player & Month Modal Shared Styles */
+        #player-modal, #month-modal { z-index: 1100; }
+        
+        /* Design för stats-rader */
+        .stats-grid-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+            width: 100%;
+            border-top: 1px solid #222;
+            border-bottom: 1px solid #222;
+            padding: 30px 0;
+            margin-bottom: 40px;
         }
-        .p-stat { display: flex; flex-direction: column; align-items: flex-start; }
-        .p-stat-val { font-size: 3.5rem; font-weight: 800; color: #fff; line-height: 1; }
-        .p-stat-lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: #555; margin-top: 10px; }
-        .player-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
-        .player-gallery .card { opacity: 0.6; transition: opacity 0.3s; }
-        .player-gallery .card:hover { opacity: 1; }
+        .sg-item { display: flex; flex-direction: column; align-items: flex-start; }
+        .sg-val { font-size: 2.5rem; font-weight: 800; color: #fff; line-height: 1; }
+        .sg-lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: #555; margin-top: 10px; }
+        .sg-name { font-size: 1rem; color: #C8102E; margin-top: 5px; font-weight: 500; }
+
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+        .gallery-grid .card { opacity: 0.6; transition: opacity 0.3s; }
+        .gallery-grid .card:hover { opacity: 1; }
 
         .clickable-player { cursor: pointer; border-bottom: 1px solid #333; transition: all 0.2s; }
         .clickable-player:hover { border-bottom: 1px solid #fff; color: #fff; }
+        
         .close-btn { position: absolute; top: 30px; right: 40px; font-size: 2rem; color: #fff; cursor: pointer; opacity: 0.5; z-index: 1001; transition: opacity 0.2s; }
         .close-btn:hover { opacity: 1; }
 
@@ -279,7 +317,7 @@
 
         @media (max-width: 768px) {
             .timeline-line { left: 20px; }
-            .match-section { padding-left: 40px; }
+            .match-section, .month-header { padding-left: 40px; }
             .match-section::before { left: 16px; top: 22px; }
             .match-info h2 { font-size: 2rem; }
             header { padding: 80px 20px; min-height: 70vh; }
@@ -330,22 +368,57 @@
             <div class="modal-text" style="flex: 1; width: 100%;">
                 <div id="p-name" class="modal-header" style="margin-bottom: 10px;"></div>
                 <div class="modal-subheader" style="margin-bottom: 40px;">Season Stats</div>
-                <div class="player-stats-row">
-                    <div class="p-stat">
-                        <span id="p-goals" class="p-stat-val">0</span>
-                        <span class="p-stat-lbl">Goals</span>
+                <div class="stats-grid-row">
+                    <div class="sg-item">
+                        <span id="p-goals" class="sg-val">0</span>
+                        <span class="sg-lbl">Goals</span>
                     </div>
-                    <div class="p-stat">
-                        <span id="p-assists" class="p-stat-val">0</span>
-                        <span class="p-stat-lbl">Assists</span>
+                    <div class="sg-item">
+                        <span id="p-assists" class="sg-val">0</span>
+                        <span class="sg-lbl">Assists</span>
                     </div>
-                    <div class="p-stat">
-                        <span id="p-involved" class="p-stat-val">0</span>
-                        <span class="p-stat-lbl">Involvements</span>
+                    <div class="sg-item">
+                        <span id="p-involved" class="sg-val">0</span>
+                        <span class="sg-lbl">Involvements</span>
                     </div>
                 </div>
                 <div class="label" style="align-self: flex-start; margin-bottom: 20px;">Contributions Gallery</div>
-                <div id="p-gallery" class="player-gallery"></div>
+                <div id="p-gallery" class="gallery-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="month-modal" class="modal-overlay" onclick="closeMonthModal(event)">
+        <div class="close-btn" onclick="closeMonthModalDirect()">&times;</div>
+        <div class="modal-content" style="max-width: 900px;" onclick="event.stopPropagation()">
+            <div class="modal-text" style="flex: 1; width: 100%;">
+                <div id="month-title" class="modal-header" style="margin-bottom: 10px;"></div>
+                <div class="modal-subheader" style="margin-bottom: 40px;">Monthly Overview</div>
+                
+                <div class="stats-grid-row">
+                    <div class="sg-item">
+                        <span id="month-goals" class="sg-val">0</span>
+                        <span class="sg-lbl">Total Goals</span>
+                    </div>
+                    <div class="sg-item">
+                        <span id="month-scorer-val" class="sg-val">0</span>
+                        <span class="sg-lbl">Top Scorer</span>
+                        <span id="month-scorer-name" class="sg-name"></span>
+                    </div>
+                    <div class="sg-item">
+                        <span id="month-assist-val" class="sg-val">0</span>
+                        <span class="sg-lbl">Assist King</span>
+                        <span id="month-assist-name" class="sg-name"></span>
+                    </div>
+                    <div class="sg-item">
+                        <span id="month-involved-val" class="sg-val">0</span>
+                        <span class="sg-lbl">Most Involved</span>
+                        <span id="month-involved-name" class="sg-name"></span>
+                    </div>
+                </div>
+
+                <div class="label" style="align-self: flex-start; margin-bottom: 20px;">Month Gallery</div>
+                <div id="month-gallery" class="gallery-grid"></div>
             </div>
         </div>
     </div>
@@ -617,7 +690,7 @@
             });
 
             const findTop = (map) => {
-                let topName = "", topCount = 0;
+                let topName = "N/A", topCount = 0;
                 for (const [name, count] of Object.entries(map)) {
                     if (count > topCount) { topCount = count; topName = name; }
                 }
@@ -663,10 +736,43 @@
         const pAssists = document.getElementById('p-assists');
         const pInvolved = document.getElementById('p-involved');
         const pGallery = document.getElementById('p-gallery');
+        
+        // Month Modal Elements
+        const monthModal = document.getElementById('month-modal');
+        const monthTitle = document.getElementById('month-title');
+        const monthGoals = document.getElementById('month-goals');
+        const monthScorerVal = document.getElementById('month-scorer-val');
+        const monthScorerName = document.getElementById('month-scorer-name');
+        const monthAssistVal = document.getElementById('month-assist-val');
+        const monthAssistName = document.getElementById('month-assist-name');
+        const monthInvolvedVal = document.getElementById('month-involved-val');
+        const monthInvolvedName = document.getElementById('month-involved-name');
+        const monthGallery = document.getElementById('month-gallery');
 
         initDashboard();
 
+        let lastMonth = "";
+        function getYearForMonth(monthStr) {
+            const lateYearMonths = ["August", "September", "October", "November", "December"];
+            return lateYearMonths.includes(monthStr) ? "2025" : "2026";
+        }
+
         seasonData.forEach((match, matchIndex) => {
+            const dateParts = match.details.split(" "); 
+            const currentMonth = dateParts[2];
+
+            if (currentMonth !== lastMonth) {
+                const monthDiv = document.createElement('div');
+                monthDiv.className = 'month-header';
+                const monthYear = `${currentMonth} ${getYearForMonth(currentMonth)}`;
+                monthDiv.innerText = monthYear;
+                // Gör rubriken klickbar
+                monthDiv.onclick = () => openMonthStats(currentMonth);
+                
+                container.appendChild(monthDiv);
+                lastMonth = currentMonth;
+            }
+
             const section = document.createElement('section');
             section.className = 'match-section';
 
@@ -707,7 +813,77 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, { threshold: 0.1 });
-        document.querySelectorAll('.match-section').forEach(s => observer.observe(s));
+        document.querySelectorAll('.match-section, .month-header').forEach(s => observer.observe(s));
+
+        // --- MONTH STATS FUNCTION ---
+        function openMonthStats(monthName) {
+            let totalG = 0;
+            const goalsMap = {}, assistsMap = {}, involvedMap = {};
+            const monthGoalsList = [];
+
+            // Loopa igenom och filtrera på månad
+            seasonData.forEach((match, mIdx) => {
+                if(match.details.includes(monthName)) {
+                    match.goals.forEach((goal, gIdx) => {
+                        totalG++;
+                        // Stats
+                        goalsMap[goal.scorer] = (goalsMap[goal.scorer] || 0) + 1;
+                        if (goal.assist && goal.assist !== "-") assistsMap[goal.assist] = (assistsMap[goal.assist] || 0) + 1;
+                        if (goal.involved) goal.involved.forEach(p => involvedMap[p] = (involvedMap[p] || 0) + 1);
+                        
+                        // Spara för galleri
+                        monthGoalsList.push({
+                            img: goal.img,
+                            scorer: goal.scorer,
+                            match: match.opponent,
+                            mIndex: mIdx,
+                            gIndex: gIdx
+                        });
+                    });
+                }
+            });
+
+            const findTop = (map) => {
+                let topName = "N/A", topCount = 0;
+                for (const [name, count] of Object.entries(map)) {
+                    if (count > topCount) { topCount = count; topName = name; }
+                }
+                return { name: topName, count: topCount };
+            };
+
+            const topScorer = findTop(goalsMap);
+            const topAssister = findTop(assistsMap);
+            const topInvolved = findTop(involvedMap);
+
+            // Fyll modalen
+            monthTitle.innerText = `${monthName} ${getYearForMonth(monthName)}`;
+            monthGoals.innerText = totalG;
+            
+            monthScorerVal.innerText = topScorer.count;
+            monthScorerName.innerText = topScorer.name;
+            
+            monthAssistVal.innerText = topAssister.count;
+            monthAssistName.innerText = topAssister.name;
+            
+            monthInvolvedVal.innerText = topInvolved.count;
+            monthInvolvedName.innerText = topInvolved.name;
+
+            // Galleri
+            monthGallery.innerHTML = '';
+            monthGoalsList.forEach(item => {
+                const miniCard = document.createElement('div');
+                miniCard.className = 'card';
+                miniCard.onclick = () => { closeMonthModalDirect(); openModal(item.mIndex, item.gIndex); };
+                miniCard.innerHTML = `<div class="image-wrapper"><img src="images/${item.img}" alt="Goal"></div><div class="meta-preview" style="font-size: 0.7rem; margin-top: 8px; color: #777;"><span>vs ${item.match}</span></div>`;
+                monthGallery.appendChild(miniCard);
+            });
+
+            monthModal.classList.add('active');
+        }
+
+        function closeMonthModal(event) { if (event.target === monthModal) closeMonthModalDirect(); }
+        function closeMonthModalDirect() { monthModal.classList.remove('active'); }
+
 
         // --- FUNCTIONS ---
         function openModal(mIndex, gIndex) {
@@ -760,6 +936,7 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === "Escape") {
                 if (playerModal.classList.contains('active')) closePlayerModalDirect();
+                else if (monthModal.classList.contains('active')) closeMonthModalDirect();
                 else closeModalDirect();
             }
         });
