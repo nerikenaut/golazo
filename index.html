@@ -16,12 +16,11 @@
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
 
-            /* --- NYTT: BAKGRUNDSBILD --- */
-            /* Vi lägger en mörk toning (gradient) över bilden för att texten ska synas bra */
+            /* --- BAKGRUNDSBILD --- */
             background-image: linear-gradient(rgba(5, 5, 5, 0.85), rgba(5, 5, 5, 0.95)), url('bg.png');
-            background-size: cover;       /* Täck hela skärmen */
-            background-position: center;  /* Centrera bilden */
-            background-attachment: fixed; /* Bilden står still när man scrollar (Parallax-känsla) */
+            background-size: cover;       
+            background-position: center;  
+            background-attachment: fixed; 
             background-repeat: no-repeat;
         }
 
@@ -59,10 +58,10 @@
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.3em;
-            color: #888; /* Ljusare grå för bättre kontrast mot bakgrunden */
+            color: #888;
             margin-bottom: 10px;
             transition: opacity 0.5s ease;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Liten skugga för läsbarhet */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         .dash-value {
@@ -110,7 +109,7 @@
             top: 0;
             bottom: 0;
             width: 1px;
-            background: linear-gradient(to bottom, transparent, #444 10%, #444 90%, transparent); /* Lite ljusare linje */
+            background: linear-gradient(to bottom, transparent, #444 10%, #444 90%, transparent);
             z-index: 0;
         }
 
@@ -118,7 +117,7 @@
         .month-header {
             font-size: 1.5rem;
             font-weight: 800;
-            color: #666; /* Lite ljusare mot bakgrunden */
+            color: #666;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             padding-left: 60px;
@@ -187,13 +186,22 @@
             text-shadow: 0 1px 2px rgba(0,0,0,0.8);
         }
 
+        /* --- Result Colors --- */
+        .result-tag {
+            font-weight: 800;
+            margin-left: 5px;
+        }
+        .res-win { color: #2ecc71; text-shadow: 0 0 10px rgba(46, 204, 113, 0.4); } /* Green */
+        .res-draw { color: #f1c40f; text-shadow: 0 0 10px rgba(241, 196, 15, 0.4); } /* Yellow */
+        .res-loss { color: #e74c3c; text-shadow: 0 0 10px rgba(231, 76, 60, 0.4); } /* Red */
+
         .competition-tag {
             padding: 4px 8px;
             border-radius: 2px;
             font-weight: 700;
             font-size: 0.7rem;
             letter-spacing: 0.1em;
-            background: rgba(26, 26, 26, 0.8); /* Lite transparens */
+            background: rgba(26, 26, 26, 0.8);
             backdrop-filter: blur(2px);
         }
         .comp-pl { color: #fff; border: 1px solid #555; } 
@@ -230,7 +238,7 @@
             position: relative;
             overflow: hidden;
             background-color: #111;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5); /* Mer djup */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
 
         .card img {
@@ -261,7 +269,7 @@
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 5, 5, 0.98); /* Nästan solid bakgrund i modalen för fokus */
+            background: rgba(5, 5, 5, 0.98);
             backdrop-filter: blur(10px);
             z-index: 1000;
             opacity: 0;
@@ -300,7 +308,6 @@
         .involved-list li { font-size: 1rem; color: #888; margin-bottom: 8px; transition: color 0.2s; }
         .involved-list li:hover { color: #fff; }
         
-        /* Player & Month Modal Shared Styles */
         #player-modal, #month-modal { z-index: 1100; }
         
         .stats-grid-row {
@@ -443,6 +450,30 @@
     <script>
         // --- DATA SÄSONGEN 25/26 (Kronologisk ordning) ---
         const seasonData = [
+            // COMMUNITY SHIELD
+            {
+                opponent: "Crystal Palace FC",
+                competition: "Community Shield",
+                compClass: "comp-cup",
+                round: "Final",
+                details: "Sun 10 August — 16:00 — Wembley",
+                score: "2 – 2 (3-2 str)",
+                resultClass: "res-loss",
+                goals: [
+                    {
+                        img: "0-ekitike-cry.png",
+                        scorer: "Hugo Ekitiké",
+                        assist: "Florian Wirtz",
+                        involved: ["Cody Gakpo", "Florian Wirtz", "Hugo Ekitiké"]
+                    },
+                    {
+                        img: "0-frimpong-cry.png",
+                        scorer: "Jeremie Frimpong",
+                        assist: "Dominik Szoboszlai",
+                        involved: ["Dominik Szoboszlai", "Milos Kerkez", "Jeremie Frimpong"]
+                    }
+                ]
+            },
             // GW 1
             { 
                 opponent: "AFC Bournemouth", 
@@ -450,6 +481,8 @@
                 compClass: "comp-pl", 
                 round: "Gameweek 1", 
                 details: "Fri 15 August — 21:00 — Anfield",
+                score: "4 – 2",
+                resultClass: "res-win",
                 goals: [
                     { img: "1-ekitike-bou.png", scorer: "Hugo Ekitiké", assist: "Alexis Mac Allister", involved: ["Virgil van Dijk", "Hugo Ekitiké", "Alexis Mac Allister"] },
                     { img: "2-gakpo-bou.png", scorer: "Cody Gakpo", assist: "Hugo Ekitiké", involved: ["Alexis Mac Allister", "Milos Kerkez", "Hugo Ekitiké", "Cody Gakpo"] },
@@ -464,6 +497,8 @@
                 compClass: "comp-pl", 
                 round: "Gameweek 2", 
                 details: "Mon 25 August — 21:00 — St. James' Park",
+                score: "2 – 3", 
+                resultClass: "res-win",
                 goals: [
                     { img: "5-gravenberch-new.png", scorer: "Ryan Gravenberch", assist: "Cody Gakpo", involved: ["Ryan Gravenberch", "Curtis Jones", "Cody Gakpo"] },
                     { img: "6-ekitike-new.png", scorer: "Hugo Ekitiké", assist: "Cody Gakpo", involved: ["Ibrahima Konaté", "Mohamed Salah", "Florian Wirtz", "Hugo Ekitiké", "Cody Gakpo"] },
@@ -477,6 +512,8 @@
                 compClass: "comp-pl", 
                 round: "Gameweek 3", 
                 details: "Sun 31 August — 17:30 — Anfield",
+                score: "1 – 0",
+                resultClass: "res-win",
                 goals: [
                     { img: "8-szoboszlai-ars.png", scorer: "Dominik Szoboszlai", assist: "-", involved: ["Dominik Szoboszlai"] }
                 ]
@@ -488,6 +525,8 @@
                 compClass: "comp-pl", 
                 round: "Gameweek 4", 
                 details: "Sun 14 September — 15:00 — Turf Moor",
+                score: "0 – 1", 
+                resultClass: "res-win",
                 goals: [
                     { img: "9-salah-bur.png", scorer: "Mohamed Salah", assist: "-", involved: ["Mohamed Salah"] }
                 ]
@@ -499,6 +538,8 @@
                 compClass: "comp-ucl", 
                 round: "Matchday 1", 
                 details: "Wed 17 September — 21:00 — Anfield",
+                score: "3 – 2",
+                resultClass: "res-win",
                 goals: [
                     { img: "10-robertson-atm.png", scorer: "Andy Robertson", assist: "Mohamed Salah", involved: ["Mohamed Salah", "Andy Robertson"] },
                     { img: "11-salah-atm.png", scorer: "Mohamed Salah", assist: "Ryan Gravenberch", involved: ["Ibrahima Konaté", "Mohamed Salah", "Ryan Gravenberch"] },
@@ -512,6 +553,8 @@
                 compClass: "comp-pl", 
                 round: "Gameweek 5", 
                 details: "Sat 20 September — 13:30 — Anfield",
+                score: "2 – 1",
+                resultClass: "res-win",
                 goals: [
                     { img: "13-gravenberch-eve.png", scorer: "Ryan Gravenberch", assist: "Mohamed Salah", involved: ["Ryan Gravenberch", "Dominik Szoboszlai", "Mohamed Salah"] },
                     { img: "14-ekitike-eve.png", scorer: "Hugo Ekitiké", assist: "Ryan Gravenberch", involved: ["Alexis Mac Allister", "Dominik Szoboszlai", "Ryan Gravenberch", "Hugo Ekitiké"] }
@@ -524,6 +567,8 @@
                 compClass: "comp-cup", 
                 round: "Round 3", 
                 details: "Tue 23 September — 21:00 — Anfield",
+                score: "2 – 1",
+                resultClass: "res-win",
                 goals: [
                     { img: "15-isak-sou.png", scorer: "Alexander Isak", assist: "Federico Chiesa", involved: ["Federico Chiesa", "Alexander Isak"] },
                     { img: "16-ekitike-sou.png", scorer: "Hugo Ekitiké", assist: "Federico Chiesa", involved: ["Jeremie Frimpong", "Conor Bradley", "Joe Gomez", "Andy Robertson", "Federico Chiesa", "Hugo Ekitiké"] }
@@ -536,6 +581,8 @@
                 compClass: "comp-pl", 
                 round: "Gameweek 6", 
                 details: "Sat 27 September — 16:00 — Selhurst Park",
+                score: "2 – 1", 
+                resultClass: "res-loss",
                 goals: [
                     { img: "17-chiesa-cry.png", scorer: "Federico Chiesa", assist: "Mohamed Salah", involved: ["Cody Gakpo", "Rio Ngumoha", "Ryan Gravenberch", "Jeremie Frimpong", "Mohamed Salah", "Federico Chiesa"] }
                 ]
@@ -547,6 +594,8 @@
                 compClass: "comp-pl", 
                 round: "Gameweek 7", 
                 details: "Sat 4 October — 18:30 — Stamford Bridge",
+                score: "2 – 1", 
+                resultClass: "res-loss",
                 goals: [
                     { img: "18-gakpo-che.png", scorer: "Cody Gakpo", assist: "Alexander Isak", involved: ["Alexander Isak", "Dominik Szoboszlai", "Mohamed Salah", "Cody Gakpo"] }
                 ]
@@ -558,6 +607,8 @@
                 compClass: "comp-pl", 
                 round: "Gameweek 8", 
                 details: "Sun 19 October — 17:30 — Anfield",
+                score: "1 – 2",
+                resultClass: "res-loss",
                 goals: [
                     { img: "19-gakpo-mun.png", scorer: "Cody Gakpo", assist: "Federico Chiesa", involved: ["Hugo Ekitiké", "Florian Wirtz", "Federico Chiesa", "Cody Gakpo"] }
                 ]
@@ -569,6 +620,8 @@
                 compClass: "comp-ucl", 
                 round: "Matchday 3", 
                 details: "Wed 22 October — 21:00 — Deutsche Bank Park",
+                score: "1 – 5", 
+                resultClass: "res-win",
                 goals: [
                     { img: "20-ekitike-fra.png", scorer: "Hugo Ekitiké", assist: "Andy Robertson", involved: ["Andy Robertson", "Hugo Ekitiké"] },
                     { img: "21-van-dijk-fra.png", scorer: "Virgil van Dijk", assist: "Cody Gakpo", involved: ["Cody Gakpo", "Virgil van Dijk"] },
@@ -584,6 +637,8 @@
                 compClass: "comp-pl", 
                 round: "Gameweek 9", 
                 details: "Sat 25 October — 21:00 — Gtech Community Stadium",
+                score: "3 – 2", 
+                resultClass: "res-loss",
                 goals: [
                     { img: "25-kerkez-bre.png", scorer: "Milos Kerkez", assist: "Conor Bradley", involved: ["Ibrahima Konaté", "Mohamed Salah", "Florian Wirtz", "Conor Bradley", "Milos Kerkez"] },
                     { img: "26-salah-bre.png", scorer: "Mohamed Salah", assist: "Dominik Szoboszlai", involved: ["Dominik Szoboszlai", "Mohamed Salah"] }
@@ -596,6 +651,8 @@
                 compClass: "comp-pl", 
                 round: "Gameweek 10", 
                 details: "Sat 1 November — 21:00 — Anfield",
+                score: "2 – 0",
+                resultClass: "res-win",
                 goals: [
                     { img: "27-salah-avl.png", scorer: "Mohamed Salah", assist: "-", involved: ["Mohamed Salah"] },
                     { img: "28-gravenberch-avl.png", scorer: "Ryan Gravenberch", assist: "Alexis Mac Allister", involved: ["Virgil van Dijk", "Cody Gakpo", "Alexis Mac Allister", "Ryan Gravenberch"] }
@@ -608,6 +665,8 @@
                 compClass: "comp-ucl", 
                 round: "Matchday 4", 
                 details: "Tue 4 November — 21:00 — Anfield",
+                score: "1 – 0",
+                resultClass: "res-win",
                 goals: [
                     { img: "29-mac-allister-rma.png", scorer: "Alexis Mac Allister", assist: "Dominik Szoboszlai", involved: ["Dominik Szoboszlai", "Alexis Mac Allister"] }
                 ]
@@ -619,6 +678,8 @@
                 compClass: "comp-ucl", 
                 round: "Matchday 5", 
                 details: "Wed 26 November — 21:00 — Anfield",
+                score: "1 – 4",
+                resultClass: "res-loss",
                 goals: [
                     { img: "30-szoboszlai-psv.png", scorer: "Dominik Szoboszlai", assist: "-", involved: ["Ryan Gravenberch", "Alexis Mac Allister", "Cody Gakpo", "Dominik Szoboszlai"] }
                 ]
@@ -630,6 +691,8 @@
                 compClass: "comp-pl", 
                 round: "Gameweek 13", 
                 details: "Sun 30 November — 15:05 — London Stadium",
+                score: "0 – 2", 
+                resultClass: "res-win",
                 goals: [
                     { img: "31-isak-whu.png", scorer: "Alexander Isak", assist: "Cody Gakpo", involved: ["Florian Wirtz", "Joe Gomez", "Cody Gakpo", "Alexander Isak"] },
                     { img: "32-gakpo-whu.png", scorer: "Cody Gakpo", assist: "Joe Gomez", involved: ["Alexis Mac Allister", "Andy Robertson", "Cody Gakpo", "Hugo Ekitiké", "Joe Gomez", "Dominik Szoboszlai"] }
@@ -642,6 +705,8 @@
                 compClass: "comp-pl", 
                 round: "Gameweek 14", 
                 details: "Wed 3 December — 21:15 — Anfield",
+                score: "1 – 1",
+                resultClass: "res-draw",
                 goals: [
                     { img: "33-mukiele-sun.png", scorer: "Nordi Mukiele (OG)", assist: "-", involved: ["Curtis Jones", "Florian Wirtz"] }
                 ]
@@ -653,6 +718,8 @@
                 compClass: "comp-pl", 
                 round: "Gameweek 15", 
                 details: "Sat 6 December — 18:30 — Elland Road",
+                score: "3 – 3",
+                resultClass: "res-draw",
                 goals: [
                     { img: "34-ekitike-lee.png", scorer: "Hugo Ekitiké", assist: "-", involved: ["Hugo Ekitiké"] },
                     { img: "35-ekitike-lee.png", scorer: "Hugo Ekitiké", assist: "Conor Bradley", involved: ["Conor Bradley", "Hugo Ekitiké"] },
@@ -666,6 +733,8 @@
                 compClass: "comp-ucl", 
                 round: "Matchday 6", 
                 details: "Tue 9 December — 21:00 — San Siro",
+                score: "0 – 1", 
+                resultClass: "res-win",
                 goals: [
                     { img: "37-szoboszlai-int.png", scorer: "Dominik Szoboszlai", assist: "-", involved: ["Dominik Szoboszlai"] }
                 ]
@@ -677,6 +746,8 @@
                 compClass: "comp-pl", 
                 round: "Gameweek 16", 
                 details: "Sat 13 December — 16:00 — Anfield",
+                score: "2 – 0",
+                resultClass: "res-win",
                 goals: [
                     { img: "38-ekitike-bha.png", scorer: "Hugo Ekitiké", assist: "Conor Bradley", involved: ["Conor Bradley", "Hugo Ekitiké"] },
                     { img: "39-ekitike-bha.png", scorer: "Hugo Ekitiké", assist: "Mohamed Salah", involved: ["Mohamed Salah", "Hugo Ekitiké"] }
@@ -689,6 +760,8 @@
                 compClass: "comp-pl",
                 round: "Gameweek 17",
                 details: "Sat 20 December — 18:30 — Tottenham Hotspur Stadium",
+                score: "1 – 2", 
+                resultClass: "res-win",
                 goals: [
                     {
                         img: "40-isak-tot.png",
@@ -711,6 +784,8 @@
                 compClass: "comp-pl",
                 round: "Gameweek 18",
                 details: "Sat 27 December — 16:00 — Anfield",
+                score: "2 – 1",
+                resultClass: "res-win",
                 goals: [
                     {
                         img: "42-gravenberch-wol.png",
@@ -844,6 +919,7 @@
                         <span>${match.round}</span>
                         <span class="meta-divider">|</span>
                         <span class="match-details-text">${match.details}</span>
+                        ${match.score ? `<span class="meta-divider">|</span><span class="result-tag ${match.resultClass}">${match.score}</span>` : ''}
                     </div>
                     <div class="match-info">
                         <h2>${match.opponent}</h2>
