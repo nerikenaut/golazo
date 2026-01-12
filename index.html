@@ -152,6 +152,10 @@
         
         .match-section.visible { opacity: 1; transform: translateY(0); }
 
+        .match-section.no-goals {
+            margin-bottom: 80px;
+        }
+
         .match-section::before {
             content: '';
             position: absolute;
@@ -207,6 +211,7 @@
         .comp-pl { color: #fff; border: 1px solid #555; } 
         .comp-ucl { color: #89CFF0; border: 1px solid rgba(137, 207, 240, 0.5); } 
         .comp-cup { color: #ff6b6b; border: 1px solid rgba(255, 107, 107, 0.5); } 
+        .comp-fa-cup { color: #f39c12; border: 1px solid rgba(243, 156, 18, 0.5); }
 
         .meta-divider { color: #666; margin: 0 5px; }
         .match-details-text { color: #ccc; font-weight: 500; letter-spacing: 0.05em; }
@@ -560,21 +565,7 @@
                     { img: "14-ekitike-eve.png", scorer: "Hugo Ekitiké", assist: "Ryan Gravenberch", involved: ["Alexis Mac Allister", "Dominik Szoboszlai", "Ryan Gravenberch", "Hugo Ekitiké"] }
                 ]
             },
-            // CUP
-            { 
-                opponent: "Southampton FC", 
-                competition: "League Cup", 
-                compClass: "comp-cup", 
-                round: "Round 3", 
-                details: "Tue 23 September — 21:00 — Anfield",
-                score: "2 – 1",
-                resultClass: "res-win",
-                goals: [
-                    { img: "15-isak-sou.png", scorer: "Alexander Isak", assist: "Federico Chiesa", involved: ["Federico Chiesa", "Alexander Isak"] },
-                    { img: "16-ekitike-sou.png", scorer: "Hugo Ekitiké", assist: "Federico Chiesa", involved: ["Jeremie Frimpong", "Conor Bradley", "Joe Gomez", "Andy Robertson", "Federico Chiesa", "Hugo Ekitiké"] }
-                ]
-            },
-            // GW 6
+            // GW 6 (Previously Missing / Chronologically here)
             { 
                 opponent: "Crystal Palace FC", 
                 competition: "Premier League", 
@@ -586,6 +577,17 @@
                 goals: [
                     { img: "17-chiesa-cry.png", scorer: "Federico Chiesa", assist: "Mohamed Salah", involved: ["Cody Gakpo", "Rio Ngumoha", "Ryan Gravenberch", "Jeremie Frimpong", "Mohamed Salah", "Federico Chiesa"] }
                 ]
+            },
+            // UCL 2 (Galatasaray)
+            { 
+                opponent: "Galatasaray SK", 
+                competition: "Champions League", 
+                compClass: "comp-ucl", 
+                round: "Matchday 2", 
+                details: "Tue 30 September — 21:00 — Rams Park",
+                score: "1 – 0",
+                resultClass: "res-loss",
+                goals: []
             },
             // GW 7
             { 
@@ -644,6 +646,17 @@
                     { img: "26-salah-bre.png", scorer: "Mohamed Salah", assist: "Dominik Szoboszlai", involved: ["Dominik Szoboszlai", "Mohamed Salah"] }
                 ]
             },
+            // Cup (Southampton was Rd 3, this is Rd 4)
+            { 
+                opponent: "Crystal Palace FC", 
+                competition: "Carabao Cup", 
+                compClass: "comp-cup", 
+                round: "Round 4", 
+                details: "Wed 29 October — 20:45 — Anfield",
+                score: "0 – 3", 
+                resultClass: "res-loss",
+                goals: []
+            },
             // GW 10
             { 
                 opponent: "Aston Villa FC", 
@@ -670,6 +683,28 @@
                 goals: [
                     { img: "29-mac-allister-rma.png", scorer: "Alexis Mac Allister", assist: "Dominik Szoboszlai", involved: ["Dominik Szoboszlai", "Alexis Mac Allister"] }
                 ]
+            },
+            // GW 11 (Man City)
+            { 
+                opponent: "Manchester City FC", 
+                competition: "Premier League", 
+                compClass: "comp-pl", 
+                round: "Gameweek 11", 
+                details: "Sun 9 November — 17:30 — Etihad Stadium",
+                score: "3 – 0", 
+                resultClass: "res-loss",
+                goals: []
+            },
+            // GW 12 (Nottm Forest)
+            { 
+                opponent: "Nottingham Forest FC", 
+                competition: "Premier League", 
+                compClass: "comp-pl", 
+                round: "Gameweek 12", 
+                details: "Sat 22 November — 16:00 — Anfield",
+                score: "0 – 3", 
+                resultClass: "res-loss",
+                goals: []
             },
             // UCL 5
             { 
@@ -801,7 +836,18 @@
                     }
                 ]
             },
-            // GW 19
+            // GW 19 (Leeds)
+            {
+                opponent: "Leeds United FC",
+                competition: "Premier League",
+                compClass: "comp-pl",
+                round: "Gameweek 19",
+                details: "Thu 1 January — 18:30 — Anfield",
+                score: "0 – 0",
+                resultClass: "res-draw",
+                goals: []
+            },
+            // GW 20 (Fulham)
             {
                 opponent: "Fulham FC",
                 competition: "Premier League",
@@ -822,6 +868,53 @@
                         scorer: "Cody Gakpo",
                         assist: "Jeremie Frimpong",
                         involved: ["Dominik Szoboszlai", "Alexis Mac Allister", "Virgil van Dijk", "Milos Kerkez", "Cody Gakpo", "Ryan Gravenberch", "Conor Bradley", "Jeremie Frimpong"]
+                    }
+                ]
+            },
+            // GW 21 (Arsenal)
+            {
+                opponent: "Arsenal FC",
+                competition: "Premier League",
+                compClass: "comp-pl",
+                round: "Gameweek 21",
+                details: "Thu 8 January — 21:00 — Emirates Stadium",
+                score: "0 – 0",
+                resultClass: "res-draw",
+                goals: []
+            },
+            // FA CUP Round 3 (Barnsley)
+            {
+                opponent: "Barnsley FC",
+                competition: "Emirates FA Cup",
+                compClass: "comp-fa-cup",
+                round: "Third Round",
+                details: "Mon 12 January — 20:45 — Anfield",
+                score: "4 – 1",
+                resultClass: "res-win",
+                goals: [
+                    {
+                        img: "46-szoboszlai-bns.png",
+                        scorer: "Dominik Szoboszlai",
+                        assist: "Alexis Mac Allister",
+                        involved: ["Rio Ngumoha", "Dominik Szoboszlai", "Alexis Mac Allister", "Curtis Jones", "Jeremie Frimpong"]
+                    },
+                    {
+                        img: "47-frimpong-bns.png",
+                        scorer: "Jeremie Frimpong",
+                        assist: "Alexis Mac Allister",
+                        involved: ["Virgil van Dijk", "Dominik Szoboszlai", "Alexis Mac Allister", "Jeremie Frimpong"]
+                    },
+                    {
+                        img: "48-wirtz-bns.png",
+                        scorer: "Florian Wirtz",
+                        assist: "Hugo Ekitiké",
+                        involved: ["Dominik Szoboszlai", "Curtis Jones", "Hugo Ekitiké", "Florian Wirtz"]
+                    },
+                    {
+                        img: "49-ekitike-bns.png",
+                        scorer: "Hugo Ekitiké",
+                        assist: "Florian Wirtz",
+                        involved: ["Ibrahima Konaté", "Dominik Szoboszlai", "Florian Wirtz", "Hugo Ekitiké"]
                     }
                 ]
             }
@@ -933,7 +1026,7 @@
             }
 
             const section = document.createElement('section');
-            section.className = 'match-section';
+            section.className = `match-section ${match.goals.length === 0 ? 'no-goals' : ''}`;
 
             const headerHTML = `
                 <div class="match-header">
@@ -952,21 +1045,24 @@
             `;
             section.innerHTML = headerHTML;
 
-            const gridDiv = document.createElement('div');
-            gridDiv.className = 'grid';
+            // Om det finns mål, skapa grid och kort
+            if (match.goals.length > 0) {
+                const gridDiv = document.createElement('div');
+                gridDiv.className = 'grid';
 
-            match.goals.forEach((goal, goalIndex) => {
-                const article = document.createElement('article');
-                article.className = 'card';
-                article.onclick = () => openModal(matchIndex, goalIndex);
-                article.innerHTML = `
-                    <div class="image-wrapper"><img src="images/${goal.img}" alt="Goal by ${goal.scorer}" loading="lazy"></div>
-                    <div class="meta-preview"><span>${goal.scorer}</span></div>
-                `;
-                gridDiv.appendChild(article);
-            });
+                match.goals.forEach((goal, goalIndex) => {
+                    const article = document.createElement('article');
+                    article.className = 'card';
+                    article.onclick = () => openModal(matchIndex, goalIndex);
+                    article.innerHTML = `
+                        <div class="image-wrapper"><img src="images/${goal.img}" alt="Goal by ${goal.scorer}" loading="lazy"></div>
+                        <div class="meta-preview"><span>${goal.scorer}</span></div>
+                    `;
+                    gridDiv.appendChild(article);
+                });
+                section.appendChild(gridDiv);
+            }
 
-            section.appendChild(gridDiv);
             container.appendChild(section);
         });
 
