@@ -15,8 +15,6 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-
-            /* --- BAKGRUNDSBILD --- */
             background-image: linear-gradient(rgba(5, 5, 5, 0.85), rgba(5, 5, 5, 0.95)), url('bg.png');
             background-size: cover;       
             background-position: center;  
@@ -26,7 +24,7 @@
 
         /* --- 2. Hero / Dashboard --- */
         header {
-            min-height: 90vh;
+            min-height: 80vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -39,7 +37,7 @@
         .brand-logo {
             width: 200px;
             height: auto;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
             opacity: 0;
             animation: fadeDown 1s ease forwards 0.2s;
         }
@@ -49,166 +47,98 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 200px;
+            height: 180px;
             opacity: 0;
             animation: fadeUp 1s ease forwards 0.5s;
+            margin-bottom: 40px;
         }
 
         .dash-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.3em;
-            color: #888;
-            margin-bottom: 10px;
-            transition: opacity 0.5s ease;
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.3em; color: #888; margin-bottom: 10px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
-
         .dash-value {
-            font-size: 6rem;
-            font-weight: 800;
-            line-height: 1;
-            color: #fff;
-            letter-spacing: -0.03em;
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            font-size: 6rem; font-weight: 800; line-height: 1; color: #fff; letter-spacing: -0.03em;
             text-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
-
         .dash-sub {
-            font-size: 1.2rem;
-            font-weight: 400;
-            color: #C8102E;
-            margin-top: 10px;
-            letter-spacing: 0.05em;
-            height: 30px;
-            transition: opacity 0.5s ease;
+            font-size: 1.2rem; font-weight: 400; color: #C8102E; margin-top: 10px; letter-spacing: 0.05em; height: 30px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
+        .fade-out { opacity: 0; transform: translateY(10px); transition: all 0.5s ease; }
 
-        .fade-out { opacity: 0; transform: translateY(10px); }
+        /* --- FILTER SECTION --- */
+        .filter-container {
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeUp 1s ease forwards 0.8s;
+            z-index: 10;
+        }
+        
+        select.player-select {
+            background-color: rgba(20, 20, 20, 0.8);
+            color: #fff;
+            border: 1px solid #444;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 30px;
+            outline: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            min-width: 250px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+        select.player-select:hover, select.player-select:focus {
+            border-color: #C8102E;
+            background-color: #000;
+        }
 
         .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            font-size: 1.5rem;
-            color: #aaa;
-            animation: bounce 2s infinite;
+            position: absolute; bottom: 30px; font-size: 1.5rem; color: #aaa; animation: bounce 2s infinite;
         }
 
         /* --- 3. Tidslinje Layout --- */
         .main-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px;
-            position: relative;
+            max-width: 1400px; margin: 0 auto; padding: 40px; position: relative; min-height: 50vh;
         }
-
         .timeline-line {
-            position: absolute;
-            left: 50px;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: linear-gradient(to bottom, transparent, #444 10%, #444 90%, transparent);
-            z-index: 0;
+            position: absolute; left: 50px; top: 0; bottom: 0; width: 1px;
+            background: linear-gradient(to bottom, transparent, #444 10%, #444 90%, transparent); z-index: 0;
         }
 
-        /* --- Månadsavdelare (Klickbar) --- */
         .month-header {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            padding-left: 60px;
-            margin-top: 80px;
-            margin-bottom: 40px;
-            position: relative;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s ease;
-            z-index: 1;
-            cursor: pointer; 
-            display: inline-block; 
-            width: 100%;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            font-size: 1.5rem; font-weight: 800; color: #666; text-transform: uppercase; letter-spacing: 0.1em;
+            padding-left: 60px; margin-top: 80px; margin-bottom: 40px; position: relative;
+            opacity: 0; transform: translateY(20px); transition: all 0.4s ease; z-index: 1;
+            cursor: pointer; display: inline-block; width: 100%; text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
-        
-        .month-header:hover {
-            color: #fff; 
-            transform: translateX(10px); 
-        }
-        
+        .month-header:hover { color: #fff; transform: translateX(10px); }
         .month-header.visible { opacity: 1; transform: translateY(0); }
 
         .match-section {
-            margin-bottom: 120px;
-            padding-left: 60px;
-            position: relative;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
+            margin-bottom: 120px; padding-left: 60px; position: relative;
+            opacity: 0; transform: translateY(30px); transition: all 0.8s ease;
         }
-        
         .match-section.visible { opacity: 1; transform: translateY(0); }
-
-        /* Justering för matcher utan mål */
-        .match-section.no-goals {
-            margin-bottom: 80px;
-        }
-
+        .match-section.no-goals { margin-bottom: 80px; }
         .match-section::before {
-            content: '';
-            position: absolute;
-            left: 6px;
-            top: 25px;
-            width: 9px;
-            height: 9px;
-            background-color: #C8102E;
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(200, 16, 46, 0.8);
-            z-index: 1;
+            content: ''; position: absolute; left: 6px; top: 25px; width: 9px; height: 9px;
+            background-color: #C8102E; border-radius: 50%; box-shadow: 0 0 10px rgba(200, 16, 46, 0.8); z-index: 1;
         }
 
         /* --- 4. Match Header --- */
-        .match-header {
-            margin-bottom: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
+        .match-header { margin-bottom: 40px; display: flex; flex-direction: column; align-items: flex-start; }
+        .match-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #aaa; margin-bottom: 10px; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+        
+        .result-tag { font-weight: 800; margin-left: 5px; }
+        .res-win { color: #2ecc71; text-shadow: 0 0 10px rgba(46, 204, 113, 0.4); }
+        .res-draw { color: #f1c40f; text-shadow: 0 0 10px rgba(241, 196, 15, 0.4); }
+        .res-loss { color: #e74c3c; text-shadow: 0 0 10px rgba(231, 76, 60, 0.4); }
 
-        .match-meta {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #aaa;
-            margin-bottom: 10px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-        }
-
-        /* --- Result Colors --- */
-        .result-tag {
-            font-weight: 800;
-            margin-left: 5px;
-        }
-        .res-win { color: #2ecc71; text-shadow: 0 0 10px rgba(46, 204, 113, 0.4); } /* Green */
-        .res-draw { color: #f1c40f; text-shadow: 0 0 10px rgba(241, 196, 15, 0.4); } /* Yellow */
-        .res-loss { color: #e74c3c; text-shadow: 0 0 10px rgba(231, 76, 60, 0.4); } /* Red */
-
-        .competition-tag {
-            padding: 4px 8px;
-            border-radius: 2px;
-            font-weight: 700;
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            background: rgba(26, 26, 26, 0.8);
-            backdrop-filter: blur(2px);
-        }
+        .competition-tag { padding: 4px 8px; border-radius: 2px; font-weight: 700; font-size: 0.7rem; letter-spacing: 0.1em; background: rgba(26, 26, 26, 0.8); backdrop-filter: blur(2px); }
         .comp-pl { color: #fff; border: 1px solid #555; } 
         .comp-ucl { color: #89CFF0; border: 1px solid rgba(137, 207, 240, 0.5); } 
         .comp-cup { color: #ff6b6b; border: 1px solid rgba(255, 107, 107, 0.5); } 
@@ -216,130 +146,120 @@
 
         .meta-divider { color: #666; margin: 0 5px; }
         .match-details-text { color: #ccc; font-weight: 500; letter-spacing: 0.05em; }
-
-        .match-info h2 {
-            font-size: 3rem;
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            color: #fff;
-            margin: 0;
-            line-height: 1;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.8);
-        }
+        .match-info h2 { font-size: 3rem; font-weight: 700; letter-spacing: -0.03em; color: #fff; margin: 0; line-height: 1; text-shadow: 0 4px 10px rgba(0,0,0,0.8); }
 
         /* --- 5. Grid & Kort --- */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .card {
-            cursor: pointer;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+        .card { cursor: pointer; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
         .card:hover { transform: translateY(-5px); }
-
-        .image-wrapper {
-            position: relative;
-            overflow: hidden;
-            background-color: #111;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-        }
-
-        .card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            opacity: 0.85;
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            filter: grayscale(20%);
-        }
+        .image-wrapper { position: relative; overflow: hidden; background-color: #111; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .card img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.85; transition: opacity 0.5s ease, transform 0.5s ease; filter: grayscale(20%); }
         .card:hover img { opacity: 1; filter: grayscale(0%); transform: scale(1.03); }
-
-        .meta-preview {
-            margin-top: 12px;
-            font-size: 0.85rem;
-            color: #ddd;
-            letter-spacing: 0.05em;
-            font-weight: 500;
-            border-left: 2px solid #444;
-            padding-left: 10px;
-            transition: border-color 0.3s;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-        }
+        .meta-preview { margin-top: 12px; font-size: 0.85rem; color: #ddd; letter-spacing: 0.05em; font-weight: 500; border-left: 2px solid #444; padding-left: 10px; transition: border-color 0.3s; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
         .card:hover .meta-preview { border-left-color: #fff; color: #fff; }
 
         /* --- 6. MODALS --- */
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 5, 5, 0.98);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            /* Justerad bakgrund för att vara genomskinlig och suddig (Glassmorphism) */
+            background: rgba(5, 5, 5, 0.85); 
+            backdrop-filter: blur(15px);
+            z-index: 1000; opacity: 0; visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
+            display: flex; justify-content: center; align-items: center; padding: 40px;
         }
         .modal-overlay.active { opacity: 1; visibility: visible; }
 
         .modal-content {
-            display: flex;
-            flex-direction: column;
-            max-width: 1200px;
-            width: 100%;
-            max-height: 90vh;
-            gap: 50px;
-            overflow-y: auto;
-            position: relative;
+            display: flex; flex-direction: column; 
+            max-width: 1400px; width: 100%;
+            max-height: 90vh; 
+            /* Transparent bakgrund så overlayen syns igenom */
+            background: transparent; 
+            box-shadow: none; /* Ingen skugga runt lådan, ser renare ut */
+            overflow: hidden; 
+            gap: 50px; position: relative;
         }
+
+        /* Desktop view */
         @media (min-width: 900px) {
-            .modal-content { flex-direction: row; align-items: center; overflow-y: visible; }
+            .modal-content { flex-direction: row; align-items: center; }
+            
+            .modal-image-container { 
+                flex: 1.5; 
+                display: flex; justify-content: center; align-items: center; 
+                position: relative; 
+            }
+            .modal-image-container img { 
+                max-width: 100%; max-height: 80vh; 
+                box-shadow: 0 20px 50px rgba(0,0,0,0.8); /* Skugga på bilden istället */
+            }
+
+            /* Här fixar vi vertikal centrering OCH skroll om det behövs */
+            .modal-text { 
+                flex: 1; 
+                display: flex; 
+                flex-direction: column; 
+                justify-content: center; /* Centrera vertikalt */
+                max-height: 80vh; 
+                overflow-y: auto; /* Skrolla bara om innehållet är för högt */
+                padding-right: 15px;
+                scrollbar-width: thin; scrollbar-color: #C8102E transparent;
+            }
         }
-        
-        .modal-image-container { flex: 1.5; display: flex; justify-content: center; align-items: center; }
-        .modal-image-container img { max-width: 100%; max-height: 80vh; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
-        .modal-text { flex: 0.5; color: #fff; display: flex; flex-direction: column; justify-content: center; }
-        .modal-header { font-size: 3rem; font-weight: 800; margin-bottom: 10px; line-height: 1; letter-spacing: -0.03em; }
-        .modal-subheader { font-size: 1.2rem; color: #666; margin-bottom: 60px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        /* Mobile view adjustments */
+        @media (max-width: 899px) {
+            .modal-content { overflow-y: auto; gap: 20px; }
+            .modal-image-container { min-height: 300px; }
+            .modal-text { padding: 0 10px 40px 10px; }
+        }
+
+        .modal-header { font-size: 3rem; font-weight: 800; margin-bottom: 10px; line-height: 1; letter-spacing: -0.03em; color: #fff; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .modal-subheader { font-size: 1.2rem; color: #888; margin-bottom: 60px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.1em; }
         .stat-section { margin-bottom: 40px; }
-        .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: #444; margin-bottom: 12px; display: block; }
+        .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: #666; margin-bottom: 12px; display: block; }
         .assist-value { font-size: 1.5rem; font-weight: 500; color: #fff; }
         .involved-list { list-style: none; padding: 0; margin: 0; }
-        .involved-list li { font-size: 1rem; color: #888; margin-bottom: 8px; transition: color 0.2s; }
+        .involved-list li { font-size: 1rem; color: #aaa; margin-bottom: 8px; transition: color 0.2s; }
         .involved-list li:hover { color: #fff; }
         
         #player-modal, #month-modal { z-index: 1100; }
         
         .stats-grid-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 30px;
-            width: 100%;
-            border-top: 1px solid #222;
-            border-bottom: 1px solid #222;
-            padding: 30px 0;
-            margin-bottom: 40px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 30px;
+            width: 100%; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 30px 0; margin-bottom: 40px;
         }
         .sg-item { display: flex; flex-direction: column; align-items: flex-start; }
         .sg-val { font-size: 2.5rem; font-weight: 800; color: #fff; line-height: 1; }
-        .sg-lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: #555; margin-top: 10px; }
+        .sg-lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; color: #666; margin-top: 10px; }
         .sg-name { font-size: 1rem; color: #C8102E; margin-top: 5px; font-weight: 500; }
 
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
-        .gallery-grid .card { opacity: 0.6; transition: opacity 0.3s; }
+        .gallery-grid .card { opacity: 0.7; transition: opacity 0.3s; }
         .gallery-grid .card:hover { opacity: 1; }
 
-        .clickable-player { cursor: pointer; border-bottom: 1px solid #333; transition: all 0.2s; }
+        .clickable-player { cursor: pointer; border-bottom: 1px solid #444; transition: all 0.2s; }
         .clickable-player:hover { border-bottom: 1px solid #fff; color: #fff; }
         
-        .close-btn { position: absolute; top: 30px; right: 40px; font-size: 2rem; color: #fff; cursor: pointer; opacity: 0.5; z-index: 1001; transition: opacity 0.2s; }
+        .close-btn { position: absolute; top: 30px; right: 40px; font-size: 2rem; color: #fff; cursor: pointer; opacity: 0.6; z-index: 1001; transition: opacity 0.2s; }
         .close-btn:hover { opacity: 1; }
+
+        /* Navigation Arrows - Tajtare */
+        .nav-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff; border: 1px solid rgba(255,255,255,0.1);
+            font-size: 1.5rem; 
+            padding: 0; cursor: pointer; z-index: 1002; transition: all 0.3s;
+            border-radius: 50%; width: 50px; height: 50px; 
+            display: flex; align-items: center; justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        .nav-btn:hover { background: #C8102E; border-color: #C8102E; }
+        /* Flyttade ännu närmare varandra (innanför bilden) */
+        .nav-prev { left: 10px; } 
+        .nav-next { right: 10px; }
 
         @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
@@ -350,7 +270,7 @@
             .match-section, .month-header { padding-left: 40px; }
             .match-section::before { left: 16px; top: 22px; }
             .match-info h2 { font-size: 2rem; }
-            header { padding: 80px 20px; min-height: 70vh; }
+            header { padding: 80px 20px; min-height: 60vh; }
             .dash-value { font-size: 4rem; }
         }
     </style>
@@ -364,6 +284,13 @@
             <div id="dash-value" class="dash-value">-</div>
             <div id="dash-sub" class="dash-sub"></div>
         </div>
+        
+        <div class="filter-container">
+            <select id="player-select" class="player-select" onchange="filterTimeline()">
+                <option value="all">Show All Players</option>
+                </select>
+        </div>
+
         <div class="scroll-indicator">&darr;</div>
     </header>
 
@@ -375,7 +302,9 @@
         <div class="close-btn" onclick="closeModalDirect()">&times;</div>
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-image-container">
+                <button class="nav-btn nav-prev" onclick="navigateModal(-1)">&#10094;</button>
                 <img id="m-img" src="" alt="">
+                <button class="nav-btn nav-next" onclick="navigateModal(1)">&#10095;</button>
             </div>
             <div class="modal-text">
                 <div id="m-scorer" class="modal-header"></div>
@@ -399,18 +328,9 @@
                 <div id="p-name" class="modal-header" style="margin-bottom: 10px;"></div>
                 <div class="modal-subheader" style="margin-bottom: 40px;">Season Stats</div>
                 <div class="stats-grid-row">
-                    <div class="sg-item">
-                        <span id="p-goals" class="sg-val">0</span>
-                        <span class="sg-lbl">Goals</span>
-                    </div>
-                    <div class="sg-item">
-                        <span id="p-assists" class="sg-val">0</span>
-                        <span class="sg-lbl">Assists</span>
-                    </div>
-                    <div class="sg-item">
-                        <span id="p-involved" class="sg-val">0</span>
-                        <span class="sg-lbl">Involvements</span>
-                    </div>
+                    <div class="sg-item"><span id="p-goals" class="sg-val">0</span><span class="sg-lbl">Goals</span></div>
+                    <div class="sg-item"><span id="p-assists" class="sg-val">0</span><span class="sg-lbl">Assists</span></div>
+                    <div class="sg-item"><span id="p-involved" class="sg-val">0</span><span class="sg-lbl">Involvements</span></div>
                 </div>
                 <div class="label" style="align-self: flex-start; margin-bottom: 20px;">Contributions Gallery</div>
                 <div id="p-gallery" class="gallery-grid"></div>
@@ -424,29 +344,12 @@
             <div class="modal-text" style="flex: 1; width: 100%;">
                 <div id="month-title" class="modal-header" style="margin-bottom: 10px;"></div>
                 <div class="modal-subheader" style="margin-bottom: 40px;">Monthly Overview</div>
-                
                 <div class="stats-grid-row">
-                    <div class="sg-item">
-                        <span id="month-goals" class="sg-val">0</span>
-                        <span class="sg-lbl">Total Goals</span>
-                    </div>
-                    <div class="sg-item">
-                        <span id="month-scorer-val" class="sg-val">0</span>
-                        <span class="sg-lbl">Top Scorer</span>
-                        <span id="month-scorer-name" class="sg-name"></span>
-                    </div>
-                    <div class="sg-item">
-                        <span id="month-assist-val" class="sg-val">0</span>
-                        <span class="sg-lbl">Assist King</span>
-                        <span id="month-assist-name" class="sg-name"></span>
-                    </div>
-                    <div class="sg-item">
-                        <span id="month-involved-val" class="sg-val">0</span>
-                        <span class="sg-lbl">Most Involved</span>
-                        <span id="month-involved-name" class="sg-name"></span>
-                    </div>
+                    <div class="sg-item"><span id="month-goals" class="sg-val">0</span><span class="sg-lbl">Total Goals</span></div>
+                    <div class="sg-item"><span id="month-scorer-val" class="sg-val">0</span><span class="sg-lbl">Top Scorer</span><span id="month-scorer-name" class="sg-name"></span></div>
+                    <div class="sg-item"><span id="month-assist-val" class="sg-val">0</span><span class="sg-lbl">Assist King</span><span id="month-assist-name" class="sg-name"></span></div>
+                    <div class="sg-item"><span id="month-involved-val" class="sg-val">0</span><span class="sg-lbl">Most Involved</span><span id="month-involved-name" class="sg-name"></span></div>
                 </div>
-
                 <div class="label" style="align-self: flex-start; margin-bottom: 20px;">Month Gallery</div>
                 <div id="month-gallery" class="gallery-grid"></div>
             </div>
@@ -454,41 +357,21 @@
     </div>
 
     <script>
-        // --- DATA SÄSONGEN 25/26 (Kronologisk ordning) ---
+        // --- DATA SÄSONGEN 25/26 ---
         const seasonData = [
             // COMMUNITY SHIELD
             {
-                opponent: "Crystal Palace FC",
-                competition: "Community Shield",
-                compClass: "comp-cup",
-                round: "Final",
-                details: "Sun 10 August — 16:00 — Wembley",
-                score: "2 – 2 (3-2 str)",
-                resultClass: "res-loss",
+                opponent: "Crystal Palace FC", competition: "Community Shield", compClass: "comp-cup", round: "Final",
+                details: "Sun 10 August — 16:00 — Wembley", score: "2 – 2 (3-2 str)", resultClass: "res-loss",
                 goals: [
-                    {
-                        img: "0-ekitike-cry.png",
-                        scorer: "Hugo Ekitiké",
-                        assist: "Florian Wirtz",
-                        involved: ["Cody Gakpo", "Florian Wirtz", "Hugo Ekitiké"]
-                    },
-                    {
-                        img: "0-frimpong-cry.png",
-                        scorer: "Jeremie Frimpong",
-                        assist: "Dominik Szoboszlai",
-                        involved: ["Dominik Szoboszlai", "Milos Kerkez", "Jeremie Frimpong"]
-                    }
+                    { img: "0-ekitike-cry.png", scorer: "Hugo Ekitiké", assist: "Florian Wirtz", involved: ["Cody Gakpo", "Florian Wirtz", "Hugo Ekitiké"] },
+                    { img: "0-frimpong-cry.png", scorer: "Jeremie Frimpong", assist: "Dominik Szoboszlai", involved: ["Dominik Szoboszlai", "Milos Kerkez", "Jeremie Frimpong"] }
                 ]
             },
             // GW 1
             { 
-                opponent: "AFC Bournemouth", 
-                competition: "Premier League", 
-                compClass: "comp-pl", 
-                round: "Gameweek 1", 
-                details: "Fri 15 August — 21:00 — Anfield",
-                score: "4 – 2",
-                resultClass: "res-win",
+                opponent: "AFC Bournemouth", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 1",
+                details: "Fri 15 August — 21:00 — Anfield", score: "4 – 2", resultClass: "res-win",
                 goals: [
                     { img: "1-ekitike-bou.png", scorer: "Hugo Ekitiké", assist: "Alexis Mac Allister", involved: ["Virgil van Dijk", "Hugo Ekitiké", "Alexis Mac Allister"] },
                     { img: "2-gakpo-bou.png", scorer: "Cody Gakpo", assist: "Hugo Ekitiké", involved: ["Alexis Mac Allister", "Milos Kerkez", "Hugo Ekitiké", "Cody Gakpo"] },
@@ -498,13 +381,8 @@
             },
             // GW 2
             { 
-                opponent: "Newcastle United FC", 
-                competition: "Premier League", 
-                compClass: "comp-pl", 
-                round: "Gameweek 2", 
-                details: "Mon 25 August — 21:00 — St. James' Park",
-                score: "2 – 3", 
-                resultClass: "res-win",
+                opponent: "Newcastle United FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 2",
+                details: "Mon 25 August — 21:00 — St. James' Park", score: "2 – 3", resultClass: "res-win",
                 goals: [
                     { img: "5-gravenberch-new.png", scorer: "Ryan Gravenberch", assist: "Cody Gakpo", involved: ["Ryan Gravenberch", "Curtis Jones", "Cody Gakpo"] },
                     { img: "6-ekitike-new.png", scorer: "Hugo Ekitiké", assist: "Cody Gakpo", involved: ["Ibrahima Konaté", "Mohamed Salah", "Florian Wirtz", "Hugo Ekitiké", "Cody Gakpo"] },
@@ -512,40 +390,13 @@
                 ]
             },
             // GW 3
-            { 
-                opponent: "Arsenal FC", 
-                competition: "Premier League", 
-                compClass: "comp-pl", 
-                round: "Gameweek 3", 
-                details: "Sun 31 August — 17:30 — Anfield",
-                score: "1 – 0",
-                resultClass: "res-win",
-                goals: [
-                    { img: "8-szoboszlai-ars.png", scorer: "Dominik Szoboszlai", assist: "-", involved: ["Dominik Szoboszlai"] }
-                ]
-            },
+            { opponent: "Arsenal FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 3", details: "Sun 31 August — 17:30 — Anfield", score: "1 – 0", resultClass: "res-win", goals: [{ img: "8-szoboszlai-ars.png", scorer: "Dominik Szoboszlai", assist: "-", involved: ["Dominik Szoboszlai"] }] },
             // GW 4
-            { 
-                opponent: "Burnley FC", 
-                competition: "Premier League", 
-                compClass: "comp-pl", 
-                round: "Gameweek 4", 
-                details: "Sun 14 September — 15:00 — Turf Moor",
-                score: "0 – 1", 
-                resultClass: "res-win",
-                goals: [
-                    { img: "9-salah-bur.png", scorer: "Mohamed Salah", assist: "-", involved: ["Mohamed Salah"] }
-                ]
-            },
+            { opponent: "Burnley FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 4", details: "Sun 14 September — 15:00 — Turf Moor", score: "0 – 1", resultClass: "res-win", goals: [{ img: "9-salah-bur.png", scorer: "Mohamed Salah", assist: "-", involved: ["Mohamed Salah"] }] },
             // UCL 1
             { 
-                opponent: "Atlético Madrid", 
-                competition: "Champions League", 
-                compClass: "comp-ucl", 
-                round: "Matchday 1", 
-                details: "Wed 17 September — 21:00 — Anfield",
-                score: "3 – 2",
-                resultClass: "res-win",
+                opponent: "Atlético Madrid", competition: "Champions League", compClass: "comp-ucl", round: "Matchday 1",
+                details: "Wed 17 September — 21:00 — Anfield", score: "3 – 2", resultClass: "res-win",
                 goals: [
                     { img: "10-robertson-atm.png", scorer: "Andy Robertson", assist: "Mohamed Salah", involved: ["Mohamed Salah", "Andy Robertson"] },
                     { img: "11-salah-atm.png", scorer: "Mohamed Salah", assist: "Ryan Gravenberch", involved: ["Ibrahima Konaté", "Mohamed Salah", "Ryan Gravenberch"] },
@@ -554,77 +405,25 @@
             },
             // GW 5
             { 
-                opponent: "Everton FC", 
-                competition: "Premier League", 
-                compClass: "comp-pl", 
-                round: "Gameweek 5", 
-                details: "Sat 20 September — 13:30 — Anfield",
-                score: "2 – 1",
-                resultClass: "res-win",
+                opponent: "Everton FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 5",
+                details: "Sat 20 September — 13:30 — Anfield", score: "2 – 1", resultClass: "res-win",
                 goals: [
                     { img: "13-gravenberch-eve.png", scorer: "Ryan Gravenberch", assist: "Mohamed Salah", involved: ["Ryan Gravenberch", "Dominik Szoboszlai", "Mohamed Salah"] },
                     { img: "14-ekitike-eve.png", scorer: "Hugo Ekitiké", assist: "Ryan Gravenberch", involved: ["Alexis Mac Allister", "Dominik Szoboszlai", "Ryan Gravenberch", "Hugo Ekitiké"] }
                 ]
             },
-            // GW 6 (Previously Missing / Chronologically here)
-            { 
-                opponent: "Crystal Palace FC", 
-                competition: "Premier League", 
-                compClass: "comp-pl", 
-                round: "Gameweek 6", 
-                details: "Sat 27 September — 16:00 — Selhurst Park",
-                score: "2 – 1", 
-                resultClass: "res-loss",
-                goals: [
-                    { img: "17-chiesa-cry.png", scorer: "Federico Chiesa", assist: "Mohamed Salah", involved: ["Cody Gakpo", "Rio Ngumoha", "Ryan Gravenberch", "Jeremie Frimpong", "Mohamed Salah", "Federico Chiesa"] }
-                ]
-            },
-            // UCL 2 (Galatasaray)
-            { 
-                opponent: "Galatasaray SK", 
-                competition: "Champions League", 
-                compClass: "comp-ucl", 
-                round: "Matchday 2", 
-                details: "Tue 30 September — 21:00 — Rams Park",
-                score: "1 – 0",
-                resultClass: "res-loss",
-                goals: []
-            },
+            // GW 6
+            { opponent: "Crystal Palace FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 6", details: "Sat 27 September — 16:00 — Selhurst Park", score: "2 – 1", resultClass: "res-loss", goals: [{ img: "17-chiesa-cry.png", scorer: "Federico Chiesa", assist: "Mohamed Salah", involved: ["Cody Gakpo", "Rio Ngumoha", "Ryan Gravenberch", "Jeremie Frimpong", "Mohamed Salah", "Federico Chiesa"] }] },
+            // UCL 2
+            { opponent: "Galatasaray SK", competition: "Champions League", compClass: "comp-ucl", round: "Matchday 2", details: "Tue 30 September — 21:00 — Rams Park", score: "1 – 0", resultClass: "res-loss", goals: [] },
             // GW 7
-            { 
-                opponent: "Chelsea FC", 
-                competition: "Premier League", 
-                compClass: "comp-pl", 
-                round: "Gameweek 7", 
-                details: "Sat 4 October — 18:30 — Stamford Bridge",
-                score: "2 – 1", 
-                resultClass: "res-loss",
-                goals: [
-                    { img: "18-gakpo-che.png", scorer: "Cody Gakpo", assist: "Alexander Isak", involved: ["Alexander Isak", "Dominik Szoboszlai", "Mohamed Salah", "Cody Gakpo"] }
-                ]
-            },
+            { opponent: "Chelsea FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 7", details: "Sat 4 October — 18:30 — Stamford Bridge", score: "2 – 1", resultClass: "res-loss", goals: [{ img: "18-gakpo-che.png", scorer: "Cody Gakpo", assist: "Alexander Isak", involved: ["Alexander Isak", "Dominik Szoboszlai", "Mohamed Salah", "Cody Gakpo"] }] },
             // GW 8
-            { 
-                opponent: "Manchester United FC", 
-                competition: "Premier League", 
-                compClass: "comp-pl", 
-                round: "Gameweek 8", 
-                details: "Sun 19 October — 17:30 — Anfield",
-                score: "1 – 2",
-                resultClass: "res-loss",
-                goals: [
-                    { img: "19-gakpo-mun.png", scorer: "Cody Gakpo", assist: "Federico Chiesa", involved: ["Hugo Ekitiké", "Florian Wirtz", "Federico Chiesa", "Cody Gakpo"] }
-                ]
-            },
+            { opponent: "Manchester United FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 8", details: "Sun 19 October — 17:30 — Anfield", score: "1 – 2", resultClass: "res-loss", goals: [{ img: "19-gakpo-mun.png", scorer: "Cody Gakpo", assist: "Federico Chiesa", involved: ["Hugo Ekitiké", "Florian Wirtz", "Federico Chiesa", "Cody Gakpo"] }] },
             // UCL 3
             { 
-                opponent: "Eintracht Frankfurt", 
-                competition: "Champions League", 
-                compClass: "comp-ucl", 
-                round: "Matchday 3", 
-                details: "Wed 22 October — 21:00 — Deutsche Bank Park",
-                score: "1 – 5", 
-                resultClass: "res-win",
+                opponent: "Eintracht Frankfurt", competition: "Champions League", compClass: "comp-ucl", round: "Matchday 3",
+                details: "Wed 22 October — 21:00 — Deutsche Bank Park", score: "1 – 5", resultClass: "res-win",
                 goals: [
                     { img: "20-ekitike-fra.png", scorer: "Hugo Ekitiké", assist: "Andy Robertson", involved: ["Andy Robertson", "Hugo Ekitiké"] },
                     { img: "21-van-dijk-fra.png", scorer: "Virgil van Dijk", assist: "Cody Gakpo", involved: ["Cody Gakpo", "Virgil van Dijk"] },
@@ -635,127 +434,47 @@
             },
             // GW 9
             { 
-                opponent: "Brentford FC", 
-                competition: "Premier League", 
-                compClass: "comp-pl", 
-                round: "Gameweek 9", 
-                details: "Sat 25 October — 21:00 — Gtech Community Stadium",
-                score: "3 – 2", 
-                resultClass: "res-loss",
+                opponent: "Brentford FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 9",
+                details: "Sat 25 October — 21:00 — Gtech Community Stadium", score: "3 – 2", resultClass: "res-loss",
                 goals: [
                     { img: "25-kerkez-bre.png", scorer: "Milos Kerkez", assist: "Conor Bradley", involved: ["Ibrahima Konaté", "Mohamed Salah", "Florian Wirtz", "Conor Bradley", "Milos Kerkez"] },
                     { img: "26-salah-bre.png", scorer: "Mohamed Salah", assist: "Dominik Szoboszlai", involved: ["Dominik Szoboszlai", "Mohamed Salah"] }
                 ]
             },
-            // Cup (Southampton was Rd 3, this is Rd 4)
-            { 
-                opponent: "Crystal Palace FC", 
-                competition: "Carabao Cup", 
-                compClass: "comp-cup", 
-                round: "Round 4", 
-                details: "Wed 29 October — 20:45 — Anfield",
-                score: "0 – 3", 
-                resultClass: "res-loss",
-                goals: []
-            },
+            // Cup
+            { opponent: "Crystal Palace FC", competition: "Carabao Cup", compClass: "comp-cup", round: "Round 4", details: "Wed 29 October — 20:45 — Anfield", score: "0 – 3", resultClass: "res-loss", goals: [] },
             // GW 10
             { 
-                opponent: "Aston Villa FC", 
-                competition: "Premier League", 
-                compClass: "comp-pl", 
-                round: "Gameweek 10", 
-                details: "Sat 1 November — 21:00 — Anfield",
-                score: "2 – 0",
-                resultClass: "res-win",
+                opponent: "Aston Villa FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 10",
+                details: "Sat 1 November — 21:00 — Anfield", score: "2 – 0", resultClass: "res-win",
                 goals: [
                     { img: "27-salah-avl.png", scorer: "Mohamed Salah", assist: "-", involved: ["Mohamed Salah"] },
                     { img: "28-gravenberch-avl.png", scorer: "Ryan Gravenberch", assist: "Alexis Mac Allister", involved: ["Virgil van Dijk", "Cody Gakpo", "Alexis Mac Allister", "Ryan Gravenberch"] }
                 ]
             },
             // UCL 4
-            { 
-                opponent: "Real Madrid CF", 
-                competition: "Champions League", 
-                compClass: "comp-ucl", 
-                round: "Matchday 4", 
-                details: "Tue 4 November — 21:00 — Anfield",
-                score: "1 – 0",
-                resultClass: "res-win",
-                goals: [
-                    { img: "29-mac-allister-rma.png", scorer: "Alexis Mac Allister", assist: "Dominik Szoboszlai", involved: ["Dominik Szoboszlai", "Alexis Mac Allister"] }
-                ]
-            },
-            // GW 11 (Man City)
-            { 
-                opponent: "Manchester City FC", 
-                competition: "Premier League", 
-                compClass: "comp-pl", 
-                round: "Gameweek 11", 
-                details: "Sun 9 November — 17:30 — Etihad Stadium",
-                score: "3 – 0", 
-                resultClass: "res-loss",
-                goals: []
-            },
-            // GW 12 (Nottm Forest)
-            { 
-                opponent: "Nottingham Forest FC", 
-                competition: "Premier League", 
-                compClass: "comp-pl", 
-                round: "Gameweek 12", 
-                details: "Sat 22 November — 16:00 — Anfield",
-                score: "0 – 3", 
-                resultClass: "res-loss",
-                goals: []
-            },
+            { opponent: "Real Madrid CF", competition: "Champions League", compClass: "comp-ucl", round: "Matchday 4", details: "Tue 4 November — 21:00 — Anfield", score: "1 – 0", resultClass: "res-win", goals: [{ img: "29-mac-allister-rma.png", scorer: "Alexis Mac Allister", assist: "Dominik Szoboszlai", involved: ["Dominik Szoboszlai", "Alexis Mac Allister"] }] },
+            // GW 11
+            { opponent: "Manchester City FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 11", details: "Sun 9 November — 17:30 — Etihad Stadium", score: "3 – 0", resultClass: "res-loss", goals: [] },
+            // GW 12
+            { opponent: "Nottingham Forest FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 12", details: "Sat 22 November — 16:00 — Anfield", score: "0 – 3", resultClass: "res-loss", goals: [] },
             // UCL 5
-            { 
-                opponent: "PSV Eindhoven", 
-                competition: "Champions League", 
-                compClass: "comp-ucl", 
-                round: "Matchday 5", 
-                details: "Wed 26 November — 21:00 — Anfield",
-                score: "1 – 4",
-                resultClass: "res-loss",
-                goals: [
-                    { img: "30-szoboszlai-psv.png", scorer: "Dominik Szoboszlai", assist: "-", involved: ["Ryan Gravenberch", "Alexis Mac Allister", "Cody Gakpo", "Dominik Szoboszlai"] }
-                ]
-            },
+            { opponent: "PSV Eindhoven", competition: "Champions League", compClass: "comp-ucl", round: "Matchday 5", details: "Wed 26 November — 21:00 — Anfield", score: "1 – 4", resultClass: "res-loss", goals: [{ img: "30-szoboszlai-psv.png", scorer: "Dominik Szoboszlai", assist: "-", involved: ["Ryan Gravenberch", "Alexis Mac Allister", "Cody Gakpo", "Dominik Szoboszlai"] }] },
             // GW 13
             { 
-                opponent: "West Ham United FC", 
-                competition: "Premier League", 
-                compClass: "comp-pl", 
-                round: "Gameweek 13", 
-                details: "Sun 30 November — 15:05 — London Stadium",
-                score: "0 – 2", 
-                resultClass: "res-win",
+                opponent: "West Ham United FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 13",
+                details: "Sun 30 November — 15:05 — London Stadium", score: "0 – 2", resultClass: "res-win",
                 goals: [
                     { img: "31-isak-whu.png", scorer: "Alexander Isak", assist: "Cody Gakpo", involved: ["Florian Wirtz", "Joe Gomez", "Cody Gakpo", "Alexander Isak"] },
                     { img: "32-gakpo-whu.png", scorer: "Cody Gakpo", assist: "Joe Gomez", involved: ["Alexis Mac Allister", "Andy Robertson", "Cody Gakpo", "Hugo Ekitiké", "Joe Gomez", "Dominik Szoboszlai"] }
                 ]
             },
             // GW 14
-            { 
-                opponent: "Sunderland AFC", 
-                competition: "Premier League", 
-                compClass: "comp-pl", 
-                round: "Gameweek 14", 
-                details: "Wed 3 December — 21:15 — Anfield",
-                score: "1 – 1",
-                resultClass: "res-draw",
-                goals: [
-                    { img: "33-mukiele-sun.png", scorer: "Nordi Mukiele (OG)", assist: "-", involved: ["Curtis Jones", "Florian Wirtz"] }
-                ]
-            },
+            { opponent: "Sunderland AFC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 14", details: "Wed 3 December — 21:15 — Anfield", score: "1 – 1", resultClass: "res-draw", goals: [{ img: "33-mukiele-sun.png", scorer: "Nordi Mukiele (OG)", assist: "-", involved: ["Curtis Jones", "Florian Wirtz"] }] },
             // GW 15
             { 
-                opponent: "Leeds United FC", 
-                competition: "Premier League", 
-                compClass: "comp-pl", 
-                round: "Gameweek 15", 
-                details: "Sat 6 December — 18:30 — Elland Road",
-                score: "3 – 3",
-                resultClass: "res-draw",
+                opponent: "Leeds United FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 15",
+                details: "Sat 6 December — 18:30 — Elland Road", score: "3 – 3", resultClass: "res-draw",
                 goals: [
                     { img: "34-ekitike-lee.png", scorer: "Hugo Ekitiké", assist: "-", involved: ["Hugo Ekitiké"] },
                     { img: "35-ekitike-lee.png", scorer: "Hugo Ekitiké", assist: "Conor Bradley", involved: ["Conor Bradley", "Hugo Ekitiké"] },
@@ -763,27 +482,11 @@
                 ]
             },
             // UCL 6
-            { 
-                opponent: "FC Internazionale Milano", 
-                competition: "Champions League", 
-                compClass: "comp-ucl", 
-                round: "Matchday 6", 
-                details: "Tue 9 December — 21:00 — San Siro",
-                score: "0 – 1", 
-                resultClass: "res-win",
-                goals: [
-                    { img: "37-szoboszlai-int.png", scorer: "Dominik Szoboszlai", assist: "-", involved: ["Dominik Szoboszlai"] }
-                ]
-            },
+            { opponent: "FC Internazionale Milano", competition: "Champions League", compClass: "comp-ucl", round: "Matchday 6", details: "Tue 9 December — 21:00 — San Siro", score: "0 – 1", resultClass: "res-win", goals: [{ img: "37-szoboszlai-int.png", scorer: "Dominik Szoboszlai", assist: "-", involved: ["Dominik Szoboszlai"] }] },
             // GW 16
             { 
-                opponent: "Brighton & Hove Albion FC", 
-                competition: "Premier League", 
-                compClass: "comp-pl", 
-                round: "Gameweek 16", 
-                details: "Sat 13 December — 16:00 — Anfield",
-                score: "2 – 0",
-                resultClass: "res-win",
+                opponent: "Brighton & Hove Albion FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 16",
+                details: "Sat 13 December — 16:00 — Anfield", score: "2 – 0", resultClass: "res-win",
                 goals: [
                     { img: "38-ekitike-bha.png", scorer: "Hugo Ekitiké", assist: "Conor Bradley", involved: ["Conor Bradley", "Hugo Ekitiké"] },
                     { img: "39-ekitike-bha.png", scorer: "Hugo Ekitiké", assist: "Mohamed Salah", involved: ["Mohamed Salah", "Hugo Ekitiké"] }
@@ -791,294 +494,100 @@
             },
             // GW 17
             {
-                opponent: "Tottenham Hotspur FC",
-                competition: "Premier League",
-                compClass: "comp-pl",
-                round: "Gameweek 17",
-                details: "Sat 20 December — 18:30 — Tottenham Hotspur Stadium",
-                score: "1 – 2", 
-                resultClass: "res-win",
+                opponent: "Tottenham Hotspur FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 17",
+                details: "Sat 20 December — 18:30 — Tottenham Hotspur Stadium", score: "1 – 2", resultClass: "res-win",
                 goals: [
-                    {
-                        img: "40-isak-tot.png",
-                        scorer: "Alexander Isak",
-                        assist: "Florian Wirtz",
-                        involved: ["Alexis Mac Allister", "Alexander Isak", "Dominik Szoboszlai", "Florian Wirtz"]
-                    },
-                    {
-                        img: "41-ekitike-tot.png",
-                        scorer: "Hugo Ekitiké",
-                        assist: "Jeremie Frimpong",
-                        involved: ["Curtis Jones", "Ryan Gravenberch", "Alexis Mac Allister", "Jeremie Frimpong", "Hugo Ekitiké"]
-                    }
+                    { img: "40-isak-tot.png", scorer: "Alexander Isak", assist: "Florian Wirtz", involved: ["Alexis Mac Allister", "Alexander Isak", "Dominik Szoboszlai", "Florian Wirtz"] },
+                    { img: "41-ekitike-tot.png", scorer: "Hugo Ekitiké", assist: "Jeremie Frimpong", involved: ["Curtis Jones", "Ryan Gravenberch", "Alexis Mac Allister", "Jeremie Frimpong", "Hugo Ekitiké"] }
                 ]
             },
             // GW 18
             {
-                opponent: "Wolverhampton Wanderers FC",
-                competition: "Premier League",
-                compClass: "comp-pl",
-                round: "Gameweek 18",
-                details: "Sat 27 December — 16:00 — Anfield",
-                score: "2 – 1",
-                resultClass: "res-win",
+                opponent: "Wolverhampton Wanderers FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 18",
+                details: "Sat 27 December — 16:00 — Anfield", score: "2 – 1", resultClass: "res-win",
                 goals: [
-                    {
-                        img: "42-gravenberch-wol.png",
-                        scorer: "Ryan Gravenberch",
-                        assist: "Jeremie Frimpong",
-                        involved: ["Virgil van Dijk", "Federico Chiesa", "Jeremie Frimpong", "Ryan Gravenberch"]
-                    },
-                    {
-                        img: "43-wirtz-wol.png",
-                        scorer: "Florian Wirtz",
-                        assist: "Hugo Ekitiké",
-                        involved: ["Hugo Ekitiké", "Milos Kerkez", "Florian Wirtz"]
-                    }
+                    { img: "42-gravenberch-wol.png", scorer: "Ryan Gravenberch", assist: "Jeremie Frimpong", involved: ["Virgil van Dijk", "Federico Chiesa", "Jeremie Frimpong", "Ryan Gravenberch"] },
+                    { img: "43-wirtz-wol.png", scorer: "Florian Wirtz", assist: "Hugo Ekitiké", involved: ["Hugo Ekitiké", "Milos Kerkez", "Florian Wirtz"] }
                 ]
             },
-            // GW 19 (Leeds)
+            // GW 19
+            { opponent: "Leeds United FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 19", details: "Thu 1 January — 18:30 — Anfield", score: "0 – 0", resultClass: "res-draw", goals: [] },
+            // GW 20
             {
-                opponent: "Leeds United FC",
-                competition: "Premier League",
-                compClass: "comp-pl",
-                round: "Gameweek 19",
-                details: "Thu 1 January — 18:30 — Anfield",
-                score: "0 – 0",
-                resultClass: "res-draw",
-                goals: []
-            },
-            // GW 20 (Fulham)
-            {
-                opponent: "Fulham FC",
-                competition: "Premier League",
-                compClass: "comp-pl",
-                round: "Gameweek 20",
-                details: "Sun 4 January — 16:15 — Craven Cottage",
-                score: "2 – 2",
-                resultClass: "res-draw",
+                opponent: "Fulham FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 20",
+                details: "Sun 4 January — 16:15 — Craven Cottage", score: "2 – 2", resultClass: "res-draw",
                 goals: [
-                    {
-                        img: "44-wirtz-ful.png",
-                        scorer: "Florian Wirtz",
-                        assist: "Conor Bradley",
-                        involved: ["Conor Bradley", "Florian Wirtz"]
-                    },
-                    {
-                        img: "45-gakpo-ful.png",
-                        scorer: "Cody Gakpo",
-                        assist: "Jeremie Frimpong",
-                        involved: ["Dominik Szoboszlai", "Alexis Mac Allister", "Virgil van Dijk", "Milos Kerkez", "Cody Gakpo", "Ryan Gravenberch", "Conor Bradley", "Jeremie Frimpong"]
-                    }
+                    { img: "44-wirtz-ful.png", scorer: "Florian Wirtz", assist: "Conor Bradley", involved: ["Conor Bradley", "Florian Wirtz"] },
+                    { img: "45-gakpo-ful.png", scorer: "Cody Gakpo", assist: "Jeremie Frimpong", involved: ["Dominik Szoboszlai", "Alexis Mac Allister", "Virgil van Dijk", "Milos Kerkez", "Cody Gakpo", "Ryan Gravenberch", "Conor Bradley", "Jeremie Frimpong"] }
                 ]
             },
-            // GW 21 (Arsenal)
+            // GW 21
+            { opponent: "Arsenal FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 21", details: "Thu 8 January — 21:00 — Emirates Stadium", score: "0 – 0", resultClass: "res-draw", goals: [] },
+            // FA CUP Round 3
             {
-                opponent: "Arsenal FC",
-                competition: "Premier League",
-                compClass: "comp-pl",
-                round: "Gameweek 21",
-                details: "Thu 8 January — 21:00 — Emirates Stadium",
-                score: "0 – 0",
-                resultClass: "res-draw",
-                goals: []
-            },
-            // FA CUP Round 3 (Barnsley)
-            {
-                opponent: "Barnsley FC",
-                competition: "Emirates FA Cup",
-                compClass: "comp-fa-cup",
-                round: "Third Round",
-                details: "Mon 12 January — 20:45 — Anfield",
-                score: "4 – 1",
-                resultClass: "res-win",
+                opponent: "Barnsley FC", competition: "Emirates FA Cup", compClass: "comp-fa-cup", round: "Third Round",
+                details: "Mon 12 January — 20:45 — Anfield", score: "4 – 1", resultClass: "res-win",
                 goals: [
-                    {
-                        img: "46-szoboszlai-bns.png",
-                        scorer: "Dominik Szoboszlai",
-                        assist: "Alexis Mac Allister",
-                        involved: ["Rio Ngumoha", "Dominik Szoboszlai", "Alexis Mac Allister", "Curtis Jones", "Jeremie Frimpong"]
-                    },
-                    {
-                        img: "47-frimpong-bns.png",
-                        scorer: "Jeremie Frimpong",
-                        assist: "Alexis Mac Allister",
-                        involved: ["Virgil van Dijk", "Dominik Szoboszlai", "Alexis Mac Allister", "Jeremie Frimpong"]
-                    },
-                    {
-                        img: "48-wirtz-bns.png",
-                        scorer: "Florian Wirtz",
-                        assist: "Hugo Ekitiké",
-                        involved: ["Dominik Szoboszlai", "Curtis Jones", "Hugo Ekitiké", "Florian Wirtz"]
-                    },
-                    {
-                        img: "49-ekitike-bns.png",
-                        scorer: "Hugo Ekitiké",
-                        assist: "Florian Wirtz",
-                        involved: ["Ibrahima Konaté", "Dominik Szoboszlai", "Florian Wirtz", "Hugo Ekitiké"]
-                    }
+                    { img: "46-szoboszlai-bns.png", scorer: "Dominik Szoboszlai", assist: "Alexis Mac Allister", involved: ["Rio Ngumoha", "Dominik Szoboszlai", "Alexis Mac Allister", "Curtis Jones", "Jeremie Frimpong"] },
+                    { img: "47-frimpong-bns.png", scorer: "Jeremie Frimpong", assist: "Alexis Mac Allister", involved: ["Virgil van Dijk", "Dominik Szoboszlai", "Alexis Mac Allister", "Jeremie Frimpong"] },
+                    { img: "48-wirtz-bns.png", scorer: "Florian Wirtz", assist: "Hugo Ekitiké", involved: ["Dominik Szoboszlai", "Curtis Jones", "Hugo Ekitiké", "Florian Wirtz"] },
+                    { img: "49-ekitike-bns.png", scorer: "Hugo Ekitiké", assist: "Florian Wirtz", involved: ["Ibrahima Konaté", "Dominik Szoboszlai", "Florian Wirtz", "Hugo Ekitiké"] }
                 ]
             },
-            // GW 22 (Burnley)
+            // GW 22
             {
-                opponent: "Burnley FC",
-                competition: "Premier League",
-                compClass: "comp-pl",
-                round: "Gameweek 22",
-                details: "Sat 17 January — 16:00 — Anfield",
-                score: "1 – 1",
-                resultClass: "res-draw",
+                opponent: "Burnley FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 22",
+                details: "Sat 17 January — 16:00 — Anfield", score: "1 – 1", resultClass: "res-draw",
+                goals: [{ img: "50-wirtz-bur.png", scorer: "Florian Wirtz", assist: "Curtis Jones", involved: ["Curtis Jones", "Florian Wirtz"] }]
+            },
+            // UCL 7
+            {
+                opponent: "Olympique de Marseille", competition: "Champions League", compClass: "comp-ucl", round: "Matchday 7",
+                details: "Wed 21 January — 21:00 — Orange Velodrome", score: "0 – 3", resultClass: "res-win",
                 goals: [
-                    {
-                        img: "50-wirtz-bur.png",
-                        scorer: "Florian Wirtz",
-                        assist: "Curtis Jones",
-                        involved: ["Curtis Jones", "Florian Wirtz"]
-                    }
+                    { img: "51-szoboszlai-mar.png", scorer: "Dominik Szoboszlai", assist: "-", involved: ["Dominik Szoboszlai"] },
+                    { img: "52-rulli-mar.png", scorer: "Gerónimo Rulli (OG)", assist: "-", involved: ["Hugo Ekitiké", "Florian Wirtz", "Alexis Mac Allister", "Jeremie Frimpong"] },
+                    { img: "53-gakpo-mar.png", scorer: "Cody Gakpo", assist: "Ryan Gravenberch", involved: ["Virgil van Dijk", "Joe Gomez", "Dominik Szoboszlai", "Ryan Gravenberch", "Cody Gakpo"] }
                 ]
             },
-            // UCL 7 (Marseille)
+            // GW 23
             {
-                opponent: "Olympique de Marseille",
-                competition: "Champions League",
-                compClass: "comp-ucl",
-                round: "Matchday 7",
-                details: "Wed 21 January — 21:00 — Orange Velodrome",
-                score: "0 – 3",
-                resultClass: "res-win",
+                opponent: "AFC Bournemouth", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 23",
+                details: "Sat 24 January — 18:30 — Vitality Stadium", score: "3 – 2", resultClass: "res-loss",
                 goals: [
-                    {
-                        img: "51-szoboszlai-mar.png",
-                        scorer: "Dominik Szoboszlai",
-                        assist: "-",
-                        involved: ["Dominik Szoboszlai"]
-                    },
-                    {
-                        img: "52-rulli-mar.png",
-                        scorer: "Gerónimo Rulli (OG)",
-                        assist: "-",
-                        involved: ["Hugo Ekitiké", "Florian Wirtz", "Alexis Mac Allister", "Jeremie Frimpong"]
-                    },
-                    {
-                        img: "53-gakpo-mar.png",
-                        scorer: "Cody Gakpo",
-                        assist: "Ryan Gravenberch",
-                        involved: ["Virgil van Dijk", "Joe Gomez", "Dominik Szoboszlai", "Ryan Gravenberch", "Cody Gakpo"]
-                    }
+                    { img: "54-van-dijk-bou.png", scorer: "Virgil van Dijk", assist: "Dominik Szoboszlai", involved: ["Dominik Szoboszlai", "Virgil van Dijk"] },
+                    { img: "55-szoboszlai-bou.png", scorer: "Dominik Szoboszlai", assist: "Mohamed Salah", involved: ["Mohamed Salah", "Dominik Szoboszlai"] }
                 ]
             },
-            // GW 23 (Bournemouth)
+            // UCL 8
             {
-                opponent: "AFC Bournemouth",
-                competition: "Premier League",
-                compClass: "comp-pl",
-                round: "Gameweek 23",
-                details: "Sat 24 January — 18:30 — Vitality Stadium",
-                score: "3 – 2",
-                resultClass: "res-loss",
+                opponent: "Qarabağ FK", competition: "Champions League", compClass: "comp-ucl", round: "Matchday 8",
+                details: "Wed 28 January — 21:00 — Anfield", score: "6 – 0", resultClass: "res-win",
                 goals: [
-                    {
-                        img: "54-van-dijk-bou.png",
-                        scorer: "Virgil van Dijk",
-                        assist: "Dominik Szoboszlai",
-                        involved: ["Dominik Szoboszlai", "Virgil van Dijk"]
-                    },
-                    {
-                        img: "55-szoboszlai-bou.png",
-                        scorer: "Dominik Szoboszlai",
-                        assist: "Mohamed Salah",
-                        involved: ["Mohamed Salah", "Dominik Szoboszlai"]
-                    }
+                    { img: "56-mac-allister-qar.png", scorer: "Alexis Mac Allister", assist: "Virgil van Dijk", involved: ["Dominik Szoboszlai", "Virgil van Dijk", "Alexis Mac Allister"] },
+                    { img: "57-wirtz-qar.png", scorer: "Florian Wirtz", assist: "Hugo Ekitiké", involved: ["Andy Robertson", "Virgil van Dijk", "Hugo Ekitiké", "Florian Wirtz"] },
+                    { img: "58-salah-qar.png", scorer: "Mohamed Salah", assist: "Dominik Szoboszlai", involved: ["Dominik Szoboszlai", "Mohamed Salah"] },
+                    { img: "59-ekitike-qar.png", scorer: "Hugo Ekitiké", assist: "Virgil van Dijk", involved: ["Virgil van Dijk", "Hugo Ekitiké"] },
+                    { img: "60-mac-allister-qar.png", scorer: "Alexis Mac Allister", assist: "-", involved: ["Florian Wirtz", "Dominik Szoboszlai", "Hugo Ekitiké", "Alexis Mac Allister"] },
+                    { img: "61-chiesa-qar.png", scorer: "Federico Chiesa", assist: "Virgil van Dijk", involved: ["Virgil van Dijk", "Trey Nyoni", "Mohamed Salah", "Federico Chiesa"] }
                 ]
             },
-            // UCL 8 (Qarabağ)
+            // GW 24
             {
-                opponent: "Qarabağ FK",
-                competition: "Champions League",
-                compClass: "comp-ucl",
-                round: "Matchday 8",
-                details: "Wed 28 January — 21:00 — Anfield",
-                score: "6 – 0",
-                resultClass: "res-win",
+                opponent: "Newcastle United FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 24",
+                details: "Sat 31 January — 21:00 — Anfield", score: "4 – 1", resultClass: "res-win",
                 goals: [
-                    {
-                        img: "56-mac-allister-qar.png",
-                        scorer: "Alexis Mac Allister",
-                        assist: "Virgil van Dijk",
-                        involved: ["Dominik Szoboszlai", "Virgil van Dijk", "Alexis Mac Allister"]
-                    },
-                    {
-                        img: "57-wirtz-qar.png",
-                        scorer: "Florian Wirtz",
-                        assist: "Hugo Ekitiké",
-                        involved: ["Andy Robertson", "Virgil van Dijk", "Hugo Ekitiké", "Florian Wirtz"]
-                    },
-                    {
-                        img: "58-salah-qar.png",
-                        scorer: "Mohamed Salah",
-                        assist: "Dominik Szoboszlai",
-                        involved: ["Dominik Szoboszlai", "Mohamed Salah"]
-                    },
-                    {
-                        img: "59-ekitike-qar.png",
-                        scorer: "Hugo Ekitiké",
-                        assist: "Virgil van Dijk",
-                        involved: ["Virgil van Dijk", "Hugo Ekitiké"]
-                    },
-                    {
-                        img: "60-mac-allister-qar.png",
-                        scorer: "Alexis Mac Allister",
-                        assist: "-",
-                        involved: ["Florian Wirtz", "Dominik Szoboszlai", "Hugo Ekitiké", "Alexis Mac Allister"]
-                    },
-                    {
-                        img: "61-chiesa-qar.png",
-                        scorer: "Federico Chiesa",
-                        assist: "Virgil van Dijk",
-                        involved: ["Virgil van Dijk", "Trey Nyoni", "Mohamed Salah", "Federico Chiesa"]
-                    }
-                ]
-            },
-            // GW 24 (Newcastle) - NEW
-            {
-                opponent: "Newcastle United FC",
-                competition: "Premier League",
-                compClass: "comp-pl",
-                round: "Gameweek 24",
-                details: "Sat 31 January — 21:00 — Anfield",
-                score: "4 – 1",
-                resultClass: "res-win",
-                goals: [
-                    {
-                        img: "62-ekitike-new.png",
-                        scorer: "Hugo Ekitiké",
-                        assist: "Florian Wirtz",
-                        involved: ["Ibrahima Konaté", "Florian Wirtz", "Cody Gakpo", "Hugo Ekitiké", "Mohamed Salah"]
-                    },
-                    {
-                        img: "63-ekitike-new.png",
-                        scorer: "Hugo Ekitiké",
-                        assist: "Milos Kerkez",
-                        involved: ["Alisson Becker", "Milos Kerkez", "Hugo Ekitiké"]
-                    },
-                    {
-                        img: "64-wirtz-new.png",
-                        scorer: "Florian Wirtz",
-                        assist: "Mohamed Salah",
-                        involved: ["Hugo Ekitiké", "Cody Gakpo", "Florian Wirtz", "Mohamed Salah"]
-                    },
-                    {
-                        img: "65-konate-new.png",
-                        scorer: "Ibrahima Konaté",
-                        assist: "-",
-                        involved: ["Dominik Szoboszlai", "Ibrahima Konaté"]
-                    }
+                    { img: "62-ekitike-new.png", scorer: "Hugo Ekitiké", assist: "Florian Wirtz", involved: ["Ibrahima Konaté", "Florian Wirtz", "Cody Gakpo", "Hugo Ekitiké", "Mohamed Salah"] },
+                    { img: "63-ekitike-new.png", scorer: "Hugo Ekitiké", assist: "Milos Kerkez", involved: ["Alisson Becker", "Milos Kerkez", "Hugo Ekitiké"] },
+                    { img: "64-wirtz-new.png", scorer: "Florian Wirtz", assist: "Mohamed Salah", involved: ["Hugo Ekitiké", "Cody Gakpo", "Florian Wirtz", "Mohamed Salah"] },
+                    { img: "65-konate-new.png", scorer: "Ibrahima Konaté", assist: "-", involved: ["Dominik Szoboszlai", "Ibrahima Konaté"] }
                 ]
             }
         ];
 
-        // --- VIKTIGT: Vänd ordningen för att visa senaste först ---
-        seasonData.reverse();
+        // --- GLOBAL GOALS LIST FOR CAROUSEL ---
+        seasonData.reverse(); // Reverse once at startup
+        let allGoalsFlat = [];
 
         // --- DASHBOARD ---
         function initDashboard() {
@@ -1089,14 +598,24 @@
             let totalGoals = 0;
             const goalsMap = {}, assistsMap = {}, involvedMap = {};
 
+            // Collect unique players for filter & populate dashboard
+            const allPlayers = new Set();
+
             seasonData.forEach(match => {
                 match.goals.forEach(goal => {
                     totalGoals++;
                     goalsMap[goal.scorer] = (goalsMap[goal.scorer] || 0) + 1;
                     if (goal.assist && goal.assist !== "-") assistsMap[goal.assist] = (assistsMap[goal.assist] || 0) + 1;
                     if (goal.involved) goal.involved.forEach(p => involvedMap[p] = (involvedMap[p] || 0) + 1);
+                    
+                    // Add to Player Set (Exclude OG)
+                    if(!goal.scorer.includes("(OG)")) allPlayers.add(goal.scorer);
+                    if(goal.assist && goal.assist !== "-") allPlayers.add(goal.assist);
+                    if(goal.involved) goal.involved.forEach(p => allPlayers.add(p));
                 });
             });
+
+            populatePlayerFilter(allPlayers);
 
             const findTop = (map) => {
                 let topName = "N/A", topCount = 0;
@@ -1131,228 +650,275 @@
             setInterval(updateDisplay, 4000);
         }
 
-        // --- MAIN RENDER ---
+        function populatePlayerFilter(playerSet) {
+            const select = document.getElementById('player-select');
+            // Sortera spelare bokstavsordning
+            const sortedPlayers = Array.from(playerSet).sort();
+            sortedPlayers.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p;
+                opt.innerText = p;
+                select.appendChild(opt);
+            });
+        }
+
+        function filterTimeline() {
+            const select = document.getElementById('player-select');
+            const selectedPlayer = select.value === "all" ? null : select.value;
+            renderTimeline(selectedPlayer);
+        }
+
+        // --- RENDER FUNCTION (Handles Filter) ---
         const container = document.getElementById('main-container');
-        const modalOverlay = document.getElementById('modal-overlay');
-        const mImg = document.getElementById('m-img');
-        const mScorer = document.getElementById('m-scorer');
-        const mMatch = document.getElementById('m-match');
-        const mAssist = document.getElementById('m-assist');
-        const mInvolved = document.getElementById('m-involved');
-        const playerModal = document.getElementById('player-modal');
-        const pName = document.getElementById('p-name');
-        const pGoals = document.getElementById('p-goals');
-        const pAssists = document.getElementById('p-assists');
-        const pInvolved = document.getElementById('p-involved');
-        const pGallery = document.getElementById('p-gallery');
-        
-        // Month Modal Elements
-        const monthModal = document.getElementById('month-modal');
-        const monthTitle = document.getElementById('month-title');
-        const monthGoals = document.getElementById('month-goals');
-        const monthScorerVal = document.getElementById('month-scorer-val');
-        const monthScorerName = document.getElementById('month-scorer-name');
-        const monthAssistVal = document.getElementById('month-assist-val');
-        const monthAssistName = document.getElementById('month-assist-name');
-        const monthInvolvedVal = document.getElementById('month-involved-val');
-        const monthInvolvedName = document.getElementById('month-involved-name');
-        const monthGallery = document.getElementById('month-gallery');
 
-        initDashboard();
+        function renderTimeline(filterPlayer = null) {
+            container.innerHTML = '<div class="timeline-line"></div>';
+            allGoalsFlat = []; // Reset for carousel
+            
+            let lastMonth = "";
+            let globalGoalIndex = 0; // For flattened indexing
 
-        let lastMonth = "";
+            seasonData.forEach((match, matchIndex) => {
+                // Determine if match should be shown
+                
+                let visibleGoals = match.goals;
+                
+                if (filterPlayer) {
+                    visibleGoals = match.goals.filter(goal => {
+                        const isScorer = goal.scorer === filterPlayer;
+                        const isAssist = goal.assist === filterPlayer;
+                        const isInvolved = goal.involved && goal.involved.includes(filterPlayer);
+                        return isScorer || isAssist || isInvolved;
+                    });
+                    
+                    if (visibleGoals.length === 0) return; 
+                }
+
+                // Month Header Logic
+                const dateParts = match.details.split(" "); 
+                const currentMonth = dateParts[2];
+                if (currentMonth !== lastMonth) {
+                    const monthDiv = document.createElement('div');
+                    monthDiv.className = 'month-header';
+                    const monthYear = `${currentMonth} ${getYearForMonth(currentMonth)}`;
+                    monthDiv.innerText = monthYear;
+                    monthDiv.onclick = () => openMonthStats(currentMonth);
+                    container.appendChild(monthDiv);
+                    lastMonth = currentMonth;
+                }
+
+                const section = document.createElement('section');
+                section.className = `match-section ${match.goals.length === 0 ? 'no-goals' : ''}`;
+
+                const headerHTML = `
+                    <div class="match-header">
+                        <div class="match-meta">
+                            <span class="competition-tag ${match.compClass}">${match.competition}</span>
+                            <span class="meta-divider">/</span>
+                            <span>${match.round}</span>
+                            <span class="meta-divider">|</span>
+                            <span class="match-details-text">${match.details}</span>
+                            ${match.score ? `<span class="meta-divider">|</span><span class="result-tag ${match.resultClass}">${match.score}</span>` : ''}
+                        </div>
+                        <div class="match-info">
+                            <h2>${match.opponent}</h2>
+                        </div>
+                    </div>
+                `;
+                section.innerHTML = headerHTML;
+
+                if (visibleGoals.length > 0) {
+                    const gridDiv = document.createElement('div');
+                    gridDiv.className = 'grid';
+
+                    visibleGoals.forEach((goal) => {
+                        const currentFlatIndex = allGoalsFlat.length;
+                        allGoalsFlat.push({ 
+                            goal: goal, 
+                            match: match 
+                        });
+
+                        const article = document.createElement('article');
+                        article.className = 'card';
+                        article.onclick = () => openModal(currentFlatIndex);
+                        article.innerHTML = `
+                            <div class="image-wrapper"><img src="images/${goal.img}" alt="Goal by ${goal.scorer}" loading="lazy"></div>
+                            <div class="meta-preview"><span>${goal.scorer}</span></div>
+                        `;
+                        gridDiv.appendChild(article);
+                    });
+                    section.appendChild(gridDiv);
+                }
+
+                container.appendChild(section);
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.match-section, .month-header').forEach(s => observer.observe(s));
+        }
+
+        // --- HELPERS ---
         function getYearForMonth(monthStr) {
             const lateYearMonths = ["August", "September", "October", "November", "December"];
             return lateYearMonths.includes(monthStr) ? "2025" : "2026";
         }
 
-        seasonData.forEach((match, matchIndex) => {
-            const dateParts = match.details.split(" "); 
-            const currentMonth = dateParts[2];
+        // --- INIT ---
+        initDashboard();
+        renderTimeline(); // Render initial full timeline
 
-            if (currentMonth !== lastMonth) {
-                const monthDiv = document.createElement('div');
-                monthDiv.className = 'month-header';
-                const monthYear = `${currentMonth} ${getYearForMonth(currentMonth)}`;
-                monthDiv.innerText = monthYear;
-                // Gör rubriken klickbar
-                monthDiv.onclick = () => openMonthStats(currentMonth);
-                
-                container.appendChild(monthDiv);
-                lastMonth = currentMonth;
+        // --- MODAL FUNCTIONS (CAROUSEL) ---
+        const mImg = document.getElementById('m-img');
+        const mScorer = document.getElementById('m-scorer');
+        const mMatch = document.getElementById('m-match');
+        const mAssist = document.getElementById('m-assist');
+        const mInvolved = document.getElementById('m-involved');
+        
+        let currentModalIndex = 0;
+
+        function openModal(flatIndex) {
+            currentModalIndex = flatIndex;
+            updateModalContent();
+            document.getElementById('modal-overlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function updateModalContent() {
+            const dataObj = allGoalsFlat[currentModalIndex];
+            const goal = dataObj.goal;
+            const match = dataObj.match;
+
+            mImg.src = `images/${goal.img}`;
+            mMatch.innerText = `${match.opponent} | ${match.competition}`;
+            mScorer.innerHTML = `<span class="clickable-player" onclick="openPlayer('${goal.scorer}')">${goal.scorer}</span>`;
+            mAssist.innerHTML = (goal.assist && goal.assist !== "-") ? `<span class="clickable-player" onclick="openPlayer('${goal.assist}')">${goal.assist}</span>` : "-";
+            mInvolved.innerHTML = '';
+            if (goal.involved) goal.involved.forEach(p => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span class="clickable-player" onclick="openPlayer('${p}')">${p}</span>`;
+                mInvolved.appendChild(li);
+            });
+        }
+
+        function navigateModal(direction) {
+            const newIndex = currentModalIndex + direction;
+            if (newIndex >= 0 && newIndex < allGoalsFlat.length) {
+                currentModalIndex = newIndex;
+                updateModalContent();
             }
+        }
 
-            const section = document.createElement('section');
-            section.className = `match-section ${match.goals.length === 0 ? 'no-goals' : ''}`;
+        function closeModal(event) { if (event.target === document.getElementById('modal-overlay')) closeModalDirect(); }
+        function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('active'); document.body.style.overflow = ''; }
 
-            const headerHTML = `
-                <div class="match-header">
-                    <div class="match-meta">
-                        <span class="competition-tag ${match.compClass}">${match.competition}</span>
-                        <span class="meta-divider">/</span>
-                        <span>${match.round}</span>
-                        <span class="meta-divider">|</span>
-                        <span class="match-details-text">${match.details}</span>
-                        ${match.score ? `<span class="meta-divider">|</span><span class="result-tag ${match.resultClass}">${match.score}</span>` : ''}
-                    </div>
-                    <div class="match-info">
-                        <h2>${match.opponent}</h2>
-                    </div>
-                </div>
-            `;
-            section.innerHTML = headerHTML;
-
-            // Om det finns mål, skapa grid och kort
-            if (match.goals.length > 0) {
-                const gridDiv = document.createElement('div');
-                gridDiv.className = 'grid';
-
-                match.goals.forEach((goal, goalIndex) => {
-                    const article = document.createElement('article');
-                    article.className = 'card';
-                    article.onclick = () => openModal(matchIndex, goalIndex);
-                    article.innerHTML = `
-                        <div class="image-wrapper"><img src="images/${goal.img}" alt="Goal by ${goal.scorer}" loading="lazy"></div>
-                        <div class="meta-preview"><span>${goal.scorer}</span></div>
-                    `;
-                    gridDiv.appendChild(article);
-                });
-                section.appendChild(gridDiv);
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('modal-overlay').classList.contains('active')) {
+                if (e.key === "ArrowLeft") navigateModal(-1);
+                if (e.key === "ArrowRight") navigateModal(1);
             }
-
-            container.appendChild(section);
+            if (e.key === "Escape") {
+                if (document.getElementById('player-modal').classList.contains('active')) closePlayerModalDirect();
+                else if (document.getElementById('month-modal').classList.contains('active')) closeMonthModalDirect();
+                else closeModalDirect();
+            }
         });
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.match-section, .month-header').forEach(s => observer.observe(s));
+        // --- PLAYER / MONTH MODALS ---
+        function openPlayer(playerName) {
+            const playerModal = document.getElementById('player-modal');
+            const pName = document.getElementById('p-name');
+            const pGoals = document.getElementById('p-goals');
+            const pAssists = document.getElementById('p-assists');
+            const pInvolved = document.getElementById('p-involved');
+            const pGallery = document.getElementById('p-gallery');
 
-        // --- MONTH STATS FUNCTION ---
+            let stats = { goals: 0, assists: 0, sequence: 0 };
+            let relatedGoals = []; 
+            
+            seasonData.forEach((match) => {
+                match.goals.forEach((goal) => {
+                    let involvedInThisGoal = false;
+                    if (goal.scorer === playerName) { stats.goals++; involvedInThisGoal = true; }
+                    if (goal.assist === playerName) { stats.assists++; involvedInThisGoal = true; }
+                    if (goal.involved && goal.involved.includes(playerName)) { stats.sequence++; involvedInThisGoal = true; }
+                    
+                    if (involvedInThisGoal) {
+                        const flatIdx = allGoalsFlat.findIndex(g => g.goal.img === goal.img);
+                        relatedGoals.push({ goal: goal, match: match, flatIndex: flatIdx });
+                    }
+                });
+            });
+
+            pName.innerText = playerName; pGoals.innerText = stats.goals; pAssists.innerText = stats.assists; pInvolved.innerText = stats.sequence;
+            pGallery.innerHTML = '';
+            relatedGoals.forEach(item => {
+                const miniCard = document.createElement('div');
+                miniCard.className = 'card';
+                miniCard.onclick = () => { 
+                    closePlayerModalDirect(); 
+                    if(item.flatIndex !== -1) openModal(item.flatIndex); 
+                };
+                miniCard.innerHTML = `<div class="image-wrapper"><img src="images/${item.goal.img}" alt="Goal"></div><div class="meta-preview" style="font-size: 0.7rem; margin-top: 8px; color: #777;"><span>vs ${item.match.opponent}</span></div>`;
+                pGallery.appendChild(miniCard);
+            });
+            playerModal.classList.add('active');
+        }
+
+        function closePlayerModal(event) { if (event.target === document.getElementById('player-modal')) closePlayerModalDirect(); }
+        function closePlayerModalDirect() { document.getElementById('player-modal').classList.remove('active'); }
+
+        // --- MONTH STATS ---
         function openMonthStats(monthName) {
+            const monthModal = document.getElementById('month-modal');
             let totalG = 0;
             const goalsMap = {}, assistsMap = {}, involvedMap = {};
             const monthGoalsList = [];
 
-            // Loopa igenom och filtrera på månad
-            seasonData.forEach((match, mIdx) => {
+            seasonData.forEach((match) => {
                 if(match.details.includes(monthName)) {
-                    match.goals.forEach((goal, gIdx) => {
+                    match.goals.forEach((goal) => {
                         totalG++;
-                        // Stats
                         goalsMap[goal.scorer] = (goalsMap[goal.scorer] || 0) + 1;
                         if (goal.assist && goal.assist !== "-") assistsMap[goal.assist] = (assistsMap[goal.assist] || 0) + 1;
                         if (goal.involved) goal.involved.forEach(p => involvedMap[p] = (involvedMap[p] || 0) + 1);
                         
-                        // Spara för galleri
-                        monthGoalsList.push({
-                            img: goal.img,
-                            scorer: goal.scorer,
-                            match: match.opponent,
-                            mIndex: mIdx,
-                            gIndex: gIdx
-                        });
+                        const flatIdx = allGoalsFlat.findIndex(g => g.goal.img === goal.img);
+                        monthGoalsList.push({ goal: goal, match: match, flatIndex: flatIdx });
                     });
                 }
             });
 
             const findTop = (map) => {
                 let topName = "N/A", topCount = 0;
-                for (const [name, count] of Object.entries(map)) {
-                    if (count > topCount) { topCount = count; topName = name; }
-                }
+                for (const [name, count] of Object.entries(map)) { if (count > topCount) { topCount = count; topName = name; } }
                 return { name: topName, count: topCount };
             };
 
-            const topScorer = findTop(goalsMap);
-            const topAssister = findTop(assistsMap);
-            const topInvolved = findTop(involvedMap);
+            const topScorer = findTop(goalsMap); const topAssister = findTop(assistsMap); const topInvolved = findTop(involvedMap);
 
-            // Fyll modalen
-            monthTitle.innerText = `${monthName} ${getYearForMonth(monthName)}`;
-            monthGoals.innerText = totalG;
-            
-            monthScorerVal.innerText = topScorer.count;
-            monthScorerName.innerText = topScorer.name;
-            
-            monthAssistVal.innerText = topAssister.count;
-            monthAssistName.innerText = topAssister.name;
-            
-            monthInvolvedVal.innerText = topInvolved.count;
-            monthInvolvedName.innerText = topInvolved.name;
+            document.getElementById('month-title').innerText = `${monthName} ${getYearForMonth(monthName)}`;
+            document.getElementById('month-goals').innerText = totalG;
+            document.getElementById('month-scorer-val').innerText = topScorer.count; document.getElementById('month-scorer-name').innerText = topScorer.name;
+            document.getElementById('month-assist-val').innerText = topAssister.count; document.getElementById('month-assist-name').innerText = topAssister.name;
+            document.getElementById('month-involved-val').innerText = topInvolved.count; document.getElementById('month-involved-name').innerText = topInvolved.name;
 
-            // Galleri
-            monthGallery.innerHTML = '';
+            const mGallery = document.getElementById('month-gallery');
+            mGallery.innerHTML = '';
             monthGoalsList.forEach(item => {
                 const miniCard = document.createElement('div');
                 miniCard.className = 'card';
-                miniCard.onclick = () => { closeMonthModalDirect(); openModal(item.mIndex, item.gIndex); };
-                miniCard.innerHTML = `<div class="image-wrapper"><img src="images/${item.img}" alt="Goal"></div><div class="meta-preview" style="font-size: 0.7rem; margin-top: 8px; color: #777;"><span>vs ${item.match}</span></div>`;
-                monthGallery.appendChild(miniCard);
+                miniCard.onclick = () => { closeMonthModalDirect(); if(item.flatIndex !== -1) openModal(item.flatIndex); };
+                miniCard.innerHTML = `<div class="image-wrapper"><img src="images/${item.goal.img}" alt="Goal"></div><div class="meta-preview" style="font-size: 0.7rem; margin-top: 8px; color: #777;"><span>vs ${item.match.opponent}</span></div>`;
+                mGallery.appendChild(miniCard);
             });
-
             monthModal.classList.add('active');
         }
 
-        function closeMonthModal(event) { if (event.target === monthModal) closeMonthModalDirect(); }
-        function closeMonthModalDirect() { monthModal.classList.remove('active'); }
+        function closeMonthModal(event) { if (event.target === document.getElementById('month-modal')) closeMonthModalDirect(); }
+        function closeMonthModalDirect() { document.getElementById('month-modal').classList.remove('active'); }
 
-
-        // --- FUNCTIONS ---
-        function openModal(mIndex, gIndex) {
-            const data = seasonData[mIndex].goals[gIndex];
-            const matchInfo = seasonData[mIndex];
-            mImg.src = `images/${data.img}`;
-            mMatch.innerText = `${matchInfo.opponent} | ${matchInfo.competition}`;
-            mScorer.innerHTML = `<span class="clickable-player" onclick="openPlayer('${data.scorer}')">${data.scorer}</span>`;
-            mAssist.innerHTML = (data.assist && data.assist !== "-") ? `<span class="clickable-player" onclick="openPlayer('${data.assist}')">${data.assist}</span>` : "-";
-            mInvolved.innerHTML = '';
-            if (data.involved) data.involved.forEach(p => {
-                const li = document.createElement('li');
-                li.innerHTML = `<span class="clickable-player" onclick="openPlayer('${p}')">${p}</span>`;
-                mInvolved.appendChild(li);
-            });
-            modalOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal(event) { if (event.target === modalOverlay) closeModalDirect(); }
-        function closeModalDirect() { modalOverlay.classList.remove('active'); document.body.style.overflow = ''; }
-
-        function openPlayer(playerName) {
-            let stats = { goals: 0, assists: 0, sequence: 0 };
-            let relatedGoals = []; 
-            seasonData.forEach((match, mIdx) => {
-                match.goals.forEach((goal, gIdx) => {
-                    let involvedInThisGoal = false;
-                    if (goal.scorer === playerName) { stats.goals++; involvedInThisGoal = true; }
-                    if (goal.assist === playerName) { stats.assists++; involvedInThisGoal = true; }
-                    if (goal.involved && goal.involved.includes(playerName)) { stats.sequence++; involvedInThisGoal = true; }
-                    if (involvedInThisGoal) relatedGoals.push({ img: goal.img, scorer: goal.scorer, match: match.opponent, mIndex: mIdx, gIndex: gIdx });
-                });
-            });
-            pName.innerText = playerName; pGoals.innerText = stats.goals; pAssists.innerText = stats.assists; pInvolved.innerText = stats.sequence;
-            pGallery.innerHTML = '';
-            relatedGoals.forEach(item => {
-                const miniCard = document.createElement('div');
-                miniCard.className = 'card';
-                miniCard.onclick = () => { closePlayerModalDirect(); openModal(item.mIndex, item.gIndex); };
-                miniCard.innerHTML = `<div class="image-wrapper"><img src="images/${item.img}" alt="Goal"></div><div class="meta-preview" style="font-size: 0.7rem; margin-top: 8px; color: #777;"><span>vs ${item.match}</span></div>`;
-                pGallery.appendChild(miniCard);
-            });
-            playerModal.classList.add('active');
-        }
-
-        function closePlayerModal(event) { if (event.target === playerModal) closePlayerModalDirect(); }
-        function closePlayerModalDirect() { playerModal.classList.remove('active'); }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === "Escape") {
-                if (playerModal.classList.contains('active')) closePlayerModalDirect();
-                else if (monthModal.classList.contains('active')) closeMonthModalDirect();
-                else closeModalDirect();
-            }
-        });
     </script>
 </body>
 </html>
