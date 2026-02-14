@@ -161,12 +161,11 @@
         /* --- 6. MODALS --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            /* Justerad bakgrund för att vara genomskinlig och suddig (Glassmorphism) */
             background: rgba(5, 5, 5, 0.85); 
             backdrop-filter: blur(15px);
             z-index: 1000; opacity: 0; visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
-            display: flex; justify-content: center; align-items: center; padding: 40px;
+            display: flex; justify-content: center; align-items: center; padding: 20px;
         }
         .modal-overlay.active { opacity: 1; visibility: visible; }
 
@@ -174,9 +173,8 @@
             display: flex; flex-direction: column; 
             max-width: 1400px; width: 100%;
             max-height: 90vh; 
-            /* Transparent bakgrund så overlayen syns igenom */
             background: transparent; 
-            box-shadow: none; /* Ingen skugga runt lådan, ser renare ut */
+            box-shadow: none; 
             overflow: hidden; 
             gap: 50px; position: relative;
         }
@@ -192,19 +190,18 @@
             }
             .modal-image-container img { 
                 max-width: 100%; max-height: 80vh; 
-                box-shadow: 0 20px 50px rgba(0,0,0,0.8); /* Skugga på bilden istället */
+                box-shadow: 0 20px 50px rgba(0,0,0,0.8); 
             }
 
-            /* Här fixar vi vertikal centrering OCH skroll om det behövs */
             .modal-text { 
                 flex: 1; 
                 display: flex; 
                 flex-direction: column; 
-                justify-content: center; /* Centrera vertikalt */
+                justify-content: center; 
                 max-height: 80vh; 
-                overflow-y: auto; /* Skrolla bara om innehållet är för högt */
+                overflow-y: auto; 
                 padding-right: 15px;
-                scrollbar-width: thin; scrollbar-color: #C8102E transparent;
+                scrollbar-width: thin; scrollbar-color: #C8102E #111;
             }
         }
 
@@ -245,7 +242,7 @@
         .close-btn { position: absolute; top: 30px; right: 40px; font-size: 2rem; color: #fff; cursor: pointer; opacity: 0.6; z-index: 1001; transition: opacity 0.2s; }
         .close-btn:hover { opacity: 1; }
 
-        /* Navigation Arrows - Tajtare */
+        /* Navigation Arrows */
         .nav-btn {
             position: absolute; top: 50%; transform: translateY(-50%);
             background: rgba(0, 0, 0, 0.6);
@@ -257,7 +254,6 @@
             backdrop-filter: blur(5px);
         }
         .nav-btn:hover { background: #C8102E; border-color: #C8102E; }
-        /* Flyttade ännu närmare varandra (innanför bilden) */
         .nav-prev { left: 10px; } 
         .nav-next { right: 10px; }
 
@@ -581,6 +577,32 @@
                     { img: "63-ekitike-new.png", scorer: "Hugo Ekitiké", assist: "Milos Kerkez", involved: ["Alisson Becker", "Milos Kerkez", "Hugo Ekitiké"] },
                     { img: "64-wirtz-new.png", scorer: "Florian Wirtz", assist: "Mohamed Salah", involved: ["Hugo Ekitiké", "Cody Gakpo", "Florian Wirtz", "Mohamed Salah"] },
                     { img: "65-konate-new.png", scorer: "Ibrahima Konaté", assist: "-", involved: ["Dominik Szoboszlai", "Ibrahima Konaté"] }
+                ]
+            },
+            // GW 25 (Man City) - NEW
+            {
+                opponent: "Manchester City FC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 25",
+                details: "Sun 8 February — 17:30 — Anfield", score: "1 – 2", resultClass: "res-loss",
+                goals: [
+                    { img: "66-szoboszlai-mci.png", scorer: "Dominik Szoboszlai", assist: "-", involved: ["Dominik Szoboszlai"] }
+                ]
+            },
+            // GW 26 (Sunderland) - NEW
+            {
+                opponent: "Sunderland AFC", competition: "Premier League", compClass: "comp-pl", round: "Gameweek 26",
+                details: "Wed 11 February — 21:15 — Stadium of Light", score: "0 – 1", resultClass: "res-win",
+                goals: [
+                    { img: "67-van-dijk-sun.png", scorer: "Virgil van Dijk", assist: "Mohamed Salah", involved: ["Mohamed Salah", "Virgil van Dijk"] }
+                ]
+            },
+            // FA Cup R4 (Brighton) - NEW
+            {
+                opponent: "Brighton & Hove Albion FC", competition: "Emirates FA Cup", compClass: "comp-fa-cup", round: "Fourth Round",
+                details: "Sat 14 February — 21:00 — Anfield", score: "3 – 0", resultClass: "res-win",
+                goals: [
+                    { img: "68-jones-bha.png", scorer: "Curtis Jones", assist: "Milos Kerkez", involved: ["Virgil van Dijk", "Cody Gakpo", "Alexis Mac Allister", "Milos Kerkez", "Curtis Jones"] },
+                    { img: "69-szoboszlai-bha.png", scorer: "Dominik Szoboszlai", assist: "Mohamed Salah", involved: ["Curtis Jones", "Ibrahima Konaté", "Virgil van Dijk", "Cody Gakpo", "Mohamed Salah", "Dominik Szoboszlai"] },
+                    { img: "70-salah-bha.png", scorer: "Mohamed Salah", assist: "-", involved: ["Mohamed Salah"] }
                 ]
             }
         ];
